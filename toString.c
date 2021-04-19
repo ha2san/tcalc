@@ -4,7 +4,8 @@
 
 
 size_t getUntil(size_t from, char* input);
-size_t isNumber(size_t from, char* input);
+size_t whileNumber(size_t from, char* input);
+int isNumber(char c);
 
 char** toString(char* input)
 {
@@ -30,12 +31,12 @@ char** toString(char* input)
     return ret;
 }
 
-//int main(void)
-//{
-//    char* input = "33+5+6*721+(-3333+2)";
-//    toString(input);
-//}
-//
+int main(void)
+{
+    char* input = "33+5+6*721+(-3333+2)-23";
+    toString(input);
+}
+
 
 size_t getUntil(size_t from,char* input)
 {
@@ -51,19 +52,28 @@ size_t getUntil(size_t from,char* input)
         case '(':
         case ')':
         case '+':
-        case '-':
         case '*':
         case '/':
             return until;
             break;
+        case '-':
+            if(isNumber(input[from-1]) == 0 && input[from-1] != ')' )
+            {
+                return whileNumber(from,input);
+            }
+            else
+            {
+                return until;
+            }
+            break;
         default:
-            return isNumber(from,input);
+            return whileNumber(from,input);
         }
     }
 }
 
 
-size_t isNumber(size_t from, char* input)
+size_t whileNumber(size_t from, char* input)
 {
     size_t until = from+1;
     while (until <= strlen(input))
@@ -89,3 +99,14 @@ size_t isNumber(size_t from, char* input)
     return until;
 }
 
+int isNumber(char c)
+{
+    if( c <= '9' && c>= '0')
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
