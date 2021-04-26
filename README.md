@@ -7,7 +7,7 @@ $ tcalc "3+2"
 ```
 or
 ```
-$tcalc
+$ tcalc
 > 3+2
 5
 ```
