@@ -1,6 +1,6 @@
 #include "tokens.h"
 
-Tokens* tokens(char* input)
+Tokens* get_tokens(char* input)
 {
     size_t input_length = strlen(input);
     char** tokens_array = calloc(sizeof(char*),input_length);
@@ -19,7 +19,8 @@ Tokens* tokens(char* input)
     Tokens* tokens = calloc(sizeof(Tokens),1);
     tokens_array = realloc(tokens_array,sizeof(char**)*index);
     tokens->elems = tokens_array;
-    tokens->size = index;
+    tokens->size = control_parenthesis(input,index);
+
     return tokens;
 }
 
@@ -95,4 +96,27 @@ int isNumber(char c)
     {
         return 0;
     }
+}
+
+
+
+int control_parenthesis(char* input, size_t size)
+{
+    int in = 0;
+    for (size_t i = 0; i < size; ++i)
+    {
+        if(input[i] == '(')
+        {
+            in++;
+        }
+        else if (input[i] == ')')
+        {
+            in--;
+        }
+        if(in != 0)
+        {
+            return ERR_PARENTHESIS;
+        }
+    }
+    return (int)size;
 }

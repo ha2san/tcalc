@@ -1,52 +1,56 @@
 #pragma once
 
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "error.h"
 
-struct _tokens {
+struct _tokens
+{
     char** elems;
-    size_t size;
+    int size; // a negative size mean that an error had occured
 };
 
 typedef struct _tokens Tokens;
 
 /**
- * @brief 
+ * @brief
  *
  * @param from
  * @param input
  *
- * @return 
+ * @return
  */
 size_t getUntil(size_t from, char* input);
 
 /**
- * @brief 
+ * @brief
  *
  * @param from
  * @param input
  *
- * @return 
+ * @return
  */
 size_t whileNumber(size_t from, char* input);
 
 /**
- * @brief 
+ * @brief
  *
  * @param c
  *
- * @return 
+ * @return
  */
 int isNumber(char c);
 
 /**
- * @brief 
+ * @brief
  *
  * @param input
  *
- * @return 
+ * @return
  */
-Tokens* tokens(char* input);
+Tokens* get_tokens(char* input);
 
 
+int control_parenthesis(char* input, size_t size);
