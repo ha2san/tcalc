@@ -1,62 +1,78 @@
 #include "tokens.h"
 
-Tokens* get_tokens(char* input)
+List_tokens* get_tokens(char* input)
 {
     size_t input_length = strlen(input);
-    char** tokens_array = calloc(sizeof(char*),input_length);
+    Tokens* tokens_array = calloc(sizeof(Tokens),input_length);
     size_t from = 0, until = 0, index = 0 ;
 
     while(until < input_length)
     {
-        until = getUntil(from,input);
+        until = getUntil(from,input,&tokens_array[index]);
         size_t length = until - from;
-        tokens_array[index] = calloc(sizeof(char),length);
-        strncpy(tokens_array[index],input+from,length);
+        tokens_array[index].value = calloc(sizeof(char),length+1);
+        strncpy(tokens_array[index].value,input+from,length);
         from = until;
         index++;
     }
 
-    Tokens* tokens = calloc(sizeof(Tokens),1);
-    tokens_array = realloc(tokens_array,sizeof(char**)*index);
-    tokens->elems = tokens_array;
-    tokens->size = control_parenthesis(input,index);
+    List_tokens* ltokens = calloc(sizeof(List_tokens),1);
+    tokens_array = realloc(tokens_array,sizeof(Tokens)*index);
+    ltokens->elems = tokens_array;
+    ltokens->size = control_parenthesis(input,index);
 
-    return tokens;
+    if(ltokens->size == ERR_PARENTHESIS )
+    {
+        fprintf(stderr,"Il y a une erreur avec les parenthèses\n");
+        return NULL;
+    }
+
+    return ltokens;
 }
 
 
-size_t getUntil(size_t from,char* input)
+size_t getUntil(size_t from,char* input,Tokens* t)
 {
     size_t until = from+1;
-    if(until == strlen(input))
+
+    switch (input[from])
     {
+    case '(':
+        t->type = LPARENTH;
         return until;
-    }
-    else
-    {
-        switch (input[from])
+        break;
+    case ')':
+        t->type = RPARENTH;
+        return until;
+        break;
+    case '+':
+        t->type = PLUS;
+        return until;
+        break;
+    case '*':
+        t->type = TIME;
+        return until;
+        break;
+    case '/':
+        t->type = DIVIDE;
+        return until;
+        break;
+    case '-':
+        t->type = MINUS;
+        if(isNumber(input[from-1]) == 0 && input[from-1] != ')' )
         {
-        case '(':
-        case ')':
-        case '+':
-        case '*':
-        case '/':
-            return until;
-            break;
-        case '-':
-            if(isNumber(input[from-1]) == 0 && input[from-1] != ')' )
-            {
-                return whileNumber(from,input);
-            }
-            else
-            {
-                return until;
-            }
-            break;
-        default:
             return whileNumber(from,input);
         }
+        else
+        {
+            return until;
+        }
+        break;
+    default:
+        t->type = NUMBER;
+        return whileNumber(from,input);
     }
+
 }
 
 
@@ -103,7 +119,7 @@ int isNumber(char c)
 int control_parenthesis(char* input, size_t size)
 {
     int in = 0;
-    for (size_t i = 0; i < size; ++i)
+    for (size_t i = 0; i < strlen(input); ++i)
     {
         if(input[i] == '(')
         {
@@ -113,10 +129,11 @@ int control_parenthesis(char* input, size_t size)
         {
             in--;
         }
-        if(in != 0)
-        {
-            return ERR_PARENTHESIS;
-        }
+
+    }
+    if(in != 0)
+    {
+        return ERR_PARENTHESIS;
     }
     return (int)size;
 }

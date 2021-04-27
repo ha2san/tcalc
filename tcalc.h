@@ -3,4 +3,3 @@
 
 #define ERROR -1
 
-Tokens* token_to_input(char* input);
