@@ -11,15 +11,17 @@ int main(int argc, char *argv[])
         {
             return ERROR;
         }
+        else
+        {
+            printf("%lf\n",do_calculation(tok));
+        }
 
     }
     else
     {
-        char* input = calloc(sizeof(char),100);
         do
         {
-
-
+            char input[100];
             printf(">");
             size_t index = 0;
 
@@ -36,10 +38,6 @@ int main(int argc, char *argv[])
 
             List_tokens* tok = get_tokens(input);
 
-            for (int i = 0; i < tok->size; ++i)
-            {
-                printf("%s -> %d\n",tok->elems[i].value,tok->elems[i].type);
-            }
 
             if(tok == NULL)
             {
@@ -47,14 +45,17 @@ int main(int argc, char *argv[])
             }
             else
             {
-
+                printf("%lf\n",do_calculation(tok));
             }
         }
-        while(1);
-        free(input);
+        while (1);
     }
     return 0;
 }
 
-
-
+double do_calculation(List_tokens const* list_token)
+{
+    Tree* tree = tokens_to_tree(list_token);
+    double ret = tree_calculation(tree);
+    return ret;
+}

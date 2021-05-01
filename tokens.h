@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include "error.h"
 
-enum _TYPE {NUMBER,PLUS,MINUS,TIME,DIVIDE,LPARENTH,RPARENTH};
+enum _TYPE {NUMBER,PLUS,MINUS,TIME,DIVIDE,LPARENTH,RPARENTH,END};
 
 typedef enum _TYPE TYPE;
 
