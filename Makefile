@@ -9,13 +9,15 @@ CFLAGS += -Wextra -Wfloat-equal -Wshadow                         \
 -Wconversion -Wunreachable-code
 
 all:: $(TARGETS)
-OBJS:= tcalc.o tokens.o calculation.o
+OBJS:= tcalc.o tokens.o calculation.o data_structure.o
 
 tcalc: $(OBJS)
 
-calculation.o: calculation.c tcalc.h
+calculation.o: calculation.c tcalc.h data_structure.h
+data_structure.o: data_structure.c data_structure.h tcalc.h
 tcalc.o: tcalc.c tcalc.h
 tokens.o: tokens.c tcalc.h
+
 
 .PHONY : clean style
 
@@ -24,4 +26,5 @@ style:
 
 clean:
 	rm -f $(OBJS) $(TARGETS)
+
 

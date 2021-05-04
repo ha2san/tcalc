@@ -6,6 +6,7 @@
 
 #define ERR_PARENTHESIS -1
 #define ERROR -1
+#define MAX 256
 enum _TYPE {NUMBER,PLUS,MINUS,TIME,DIVIDE,LPARENTH,RPARENTH,END};
 
 typedef enum _TYPE TYPE;
@@ -16,21 +17,18 @@ typedef struct _tokens Tokens;
 
 typedef struct _list_tokens List_tokens;
 
-struct _tokens
-{
+struct _tokens {
     char* value;
     TYPE type;
 };
 
-struct _tree
-{
+struct _tree {
     Tokens value;
     Tree* left_tree;
     Tree* right_tree;
 };
 
-struct _list_tokens
-{
+struct _list_tokens {
     Tokens* elems;
     int size; // a negative size mean that an error had occured
 };
@@ -92,7 +90,7 @@ int control_parenthesis(char* input, size_t size);
  *
  * @return
  */
-double do_calculation(List_tokens const* list);
+double do_calculation(List_tokens* list);
 
 /**
  * @brief
@@ -101,7 +99,7 @@ double do_calculation(List_tokens const* list);
  *
  * @return
  */
-Tree* tokens_to_tree(List_tokens const* list);
+void tokens_to_postfix(List_tokens* list);
 
 /**
  * @brief
@@ -110,4 +108,4 @@ Tree* tokens_to_tree(List_tokens const* list);
  *
  * @return
  */
-double tree_calculation(Tree* tree);
+double postfix_calculation(List_tokens* list);

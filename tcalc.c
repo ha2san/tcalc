@@ -2,41 +2,28 @@
 
 int main(int argc, char *argv[])
 {
-    if(argc > 1)
-    {
+    if(argc > 1) {
         List_tokens* tok = get_tokens(*(argv+1));
 
         if(tok == NULL)  return ERROR;
         else  printf("%lf\n",do_calculation(tok));
 
-    }
-    else
-    {
-        do
-        {
+    } else {
+        do {
             char input[100];
-            printf(">");
+            printf("> ");
             size_t index = 0;
-
-            do
-            {
+            do {
                 input[index] = (char) getc(stdin);
                 index++;
-            }
-            while(input[index-1] != '\n');
-
+            } while(input[index-1] != '\n');
             input[index-1] = 0;
-
-            printf("|%s|\n",input);
-
+            if(!strcmp(input,"q")) return 0;
             List_tokens* tok = get_tokens(input);
 
             if(tok == NULL)  return ERROR;
             else  printf("%lf\n",do_calculation(tok));
-
-
-        }
-        while (1);
+        } while (1);
     }
     return 0;
 }
