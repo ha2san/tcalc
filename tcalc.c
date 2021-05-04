@@ -1,20 +1,13 @@
 #include "tcalc.h"
 
-
 int main(int argc, char *argv[])
 {
     if(argc > 1)
     {
         List_tokens* tok = get_tokens(*(argv+1));
 
-        if(tok == NULL)
-        {
-            return ERROR;
-        }
-        else
-        {
-            printf("%lf\n",do_calculation(tok));
-        }
+        if(tok == NULL)  return ERROR;
+        else  printf("%lf\n",do_calculation(tok));
 
     }
     else
@@ -38,24 +31,13 @@ int main(int argc, char *argv[])
 
             List_tokens* tok = get_tokens(input);
 
+            if(tok == NULL)  return ERROR;
+            else  printf("%lf\n",do_calculation(tok));
 
-            if(tok == NULL)
-            {
-                return ERROR;
-            }
-            else
-            {
-                printf("%lf\n",do_calculation(tok));
-            }
+
         }
         while (1);
     }
     return 0;
 }
 
-double do_calculation(List_tokens const* list_token)
-{
-    Tree* tree = tokens_to_tree(list_token);
-    double ret = tree_calculation(tree);
-    return ret;
-}

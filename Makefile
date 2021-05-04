@@ -1,5 +1,7 @@
 TARGETS:= style tcalc
 
+CC=gcc
+
 CFLAGS = -std=c11 -Wall -pedantic -g
 
 CFLAGS += -Wextra -Wfloat-equal -Wshadow                         \
@@ -7,12 +9,13 @@ CFLAGS += -Wextra -Wfloat-equal -Wshadow                         \
 -Wconversion -Wunreachable-code
 
 all:: $(TARGETS)
-OBJS:= tcalc.o tokens.o
+OBJS:= tcalc.o tokens.o calculation.o
 
 tcalc: $(OBJS)
 
-tcalc.o: tcalc.c tcalc.h tokens.h error.h
-tokens.o: tokens.c tokens.h
+calculation.o: calculation.c tcalc.h
+tcalc.o: tcalc.c tcalc.h
+tokens.o: tokens.c tcalc.h
 
 .PHONY : clean style
 
@@ -21,3 +24,4 @@ style:
 
 clean:
 	rm -f $(OBJS) $(TARGETS)
+

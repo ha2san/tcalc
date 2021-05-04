@@ -1,9 +1,26 @@
-#include "tokens.h"
-#include "error.h"
+#pragma once
 
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+#define ERR_PARENTHESIS -1
 #define ERROR -1
+enum _TYPE {NUMBER,PLUS,MINUS,TIME,DIVIDE,LPARENTH,RPARENTH,END};
+
+typedef enum _TYPE TYPE;
 
 typedef struct _tree Tree;
+
+typedef struct _tokens Tokens;
+
+typedef struct _list_tokens List_tokens;
+
+struct _tokens
+{
+    char* value;
+    TYPE type;
+};
 
 struct _tree
 {
@@ -12,8 +29,85 @@ struct _tree
     Tree* right_tree;
 };
 
+struct _list_tokens
+{
+    Tokens* elems;
+    int size; // a negative size mean that an error had occured
+};
+
+
+/**
+ * @brief
+ *
+ * @param from
+ * @param input
+ *
+ * @return
+ */
+size_t getUntil(size_t from,char* input,Tokens* t);
+
+/**
+ * @brief
+ *
+ * @param from
+ * @param input
+ *
+ * @return
+ */
+size_t whileNumber(size_t from, char* input);
+
+/**
+ * @brief
+ *
+ * @param c
+ *
+ * @return
+ */
+int isNumber(char c);
+
+/**
+ * @brief
+ *
+ * @param input
+ *
+ * @return
+ */
+List_tokens* get_tokens(char* input);
+
+
+/**
+ * @brief
+ *
+ * @param input
+ * @param size
+ *
+ * @return
+ */
+int control_parenthesis(char* input, size_t size);
+
+/**
+ * @brief
+ *
+ * @param list
+ *
+ * @return
+ */
 double do_calculation(List_tokens const* list);
 
+/**
+ * @brief
+ *
+ * @param list
+ *
+ * @return
+ */
 Tree* tokens_to_tree(List_tokens const* list);
 
+/**
+ * @brief
+ *
+ * @param tree
+ *
+ * @return
+ */
 double tree_calculation(Tree* tree);
