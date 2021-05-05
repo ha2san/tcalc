@@ -24,7 +24,8 @@ tokens.o: tokens.c tcalc.h
 .PHONY : clean style
 
 style:
-	astyle -n -oO -A1 -xt0 *.[ch]
+	astyle -n -o -A8 -xt0 *.[ch]
+
 
 clean:
 	rm -f $(OBJS) $(TARGETS)

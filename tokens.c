@@ -60,7 +60,9 @@ size_t getUntil(size_t* from,char* input,Tokens* t)
         t->type = DIVIDE; return until;
     case '-':
         t->type = MINUS;
-        if(isNumber(input[*from-1]) == 0 && input[*from-1] != ')' ) {
+        if((*from > 0 && isNumber(input[*from-1]) == 0 && input[*from-1] != ')' )
+           || *from == 0) {
+            t->type = NUMBER;
             return whileNumber(*from,input);
         } else return until;
 
@@ -79,22 +81,8 @@ size_t whileNumber(size_t from, char* input)
 {
     size_t until = from+1;
     while (until <= strlen(input)) {
-        switch (input[until]) {
-        case '0':
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-            until++;
-            break;
-        default:
-            return until;
-        }
+        if(isNumber(input[until])) until++;
+        else return until;
     }
     return until;
 }
