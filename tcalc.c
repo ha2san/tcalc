@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
         printf("write \"clear\" to clear the screen\n"
               "write \"q\" to exit\n");
         do {
-            char input[100];
+            char input[MAX];
             printf("> ");
             size_t index = 0;
             do {

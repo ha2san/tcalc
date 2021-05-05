@@ -29,6 +29,8 @@ void print_token(Tokens t);
 
 void print_list_tokens(List_tokens const* list);
 
+char* clean_from_space(char* input);
+
 /**
  * @brief
  *
@@ -37,7 +39,7 @@ void print_list_tokens(List_tokens const* list);
  *
  * @return
  */
-size_t getUntil(size_t* from,char* input,Tokens* t);
+size_t getUntil(size_t index, size_t* from,char* input,Tokens* t);
 
 /**
  * @brief

@@ -10,6 +10,11 @@ CFLAGS += -Wextra -Wfloat-equal -Wshadow                         \
 
 LDLIBS = -lm 
 
+
+
+#CFLAGS += -fsanitize=address
+#LDLIBS += -fsanitize=address
+
 all:: $(TARGETS)
 OBJS:= tcalc.o tokens.o calculation.o data_structure.o
 
