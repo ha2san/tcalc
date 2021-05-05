@@ -11,8 +11,6 @@ enum _TYPE {NUMBER,PLUS,MINUS,TIME,DIVIDE,POWER,LPARENTH,RPARENTH,END};
 
 typedef enum _TYPE TYPE;
 
-typedef struct _tree Tree;
-
 typedef struct _tokens Tokens;
 
 typedef struct _list_tokens List_tokens;
@@ -20,12 +18,6 @@ typedef struct _list_tokens List_tokens;
 struct _tokens {
     char* value;
     TYPE type;
-};
-
-struct _tree {
-    Tokens value;
-    Tree* left_tree;
-    Tree* right_tree;
 };
 
 struct _list_tokens {
@@ -74,6 +66,13 @@ int isNumber(char c);
  * @return
  */
 List_tokens* get_tokens(char* input);
+
+/**
+ * @brief 
+ *
+ * @param list
+ */
+void free_list_tokens(List_tokens* list);
 
 
 /**

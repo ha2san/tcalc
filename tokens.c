@@ -41,37 +41,45 @@ List_tokens* get_tokens(char* input)
 }
 
 
+void free_list_tokens(List_tokens* list)
+{
+    if(list != NULL){
+        if(list->elems != NULL) free(list->elems); 
+        free(list);
+    }
+}
+
 size_t getUntil(size_t* from,char* input,Tokens* t)
 {
     size_t until = (*from)+1;
 
     switch (input[*from]) {
-    case '(':
-        t->type = LPARENTH; return until;
-    case ')':
-        t->type = RPARENTH; return until;
-    case '+':
-        t->type = PLUS; return until;
-    case '*':
-        t->type = TIME; return until;
-    case '^':
-        t->type = POWER; return until;
-    case '/':
-        t->type = DIVIDE; return until;
-    case '-':
-        t->type = MINUS;
-        if((*from > 0 && isNumber(input[*from-1]) == 0 && input[*from-1] != ')' )
-           || *from == 0) {
+        case '(':
+            t->type = LPARENTH; return until;
+        case ')':
+            t->type = RPARENTH; return until;
+        case '+':
+            t->type = PLUS; return until;
+        case '*':
+            t->type = TIME; return until;
+        case '^':
+            t->type = POWER; return until;
+        case '/':
+            t->type = DIVIDE; return until;
+        case '-':
+            t->type = MINUS;
+            if((*from > 0 && isNumber(input[*from-1]) == 0 && input[*from-1] != ')' )
+                    || *from == 0) {
+                t->type = NUMBER;
+                return whileNumber(*from,input);
+            } else return until;
+
+        case ' ':
+            (*from)++;
+            return getUntil(from,input,t);
+        default:
             t->type = NUMBER;
             return whileNumber(*from,input);
-        } else return until;
-
-    case ' ':
-        (*from)++;
-        return getUntil(from,input,t);
-    default:
-        t->type = NUMBER;
-        return whileNumber(*from,input);
     }
 
 }

@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 
         if(tok == NULL)  return ERROR;
         else  printf("%g\n",do_calculation(tok));
+        free_list_tokens(tok);
 
     } else {
         do {
@@ -32,6 +33,7 @@ int main(int argc, char *argv[])
             List_tokens* tok = get_tokens(input);
             if(tok == NULL)  return ERROR;
             else  printf("%g\n",do_calculation(tok));
+            free_list_tokens(tok);
         } while (1);
     }
     return 0;
