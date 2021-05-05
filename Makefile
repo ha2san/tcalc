@@ -28,6 +28,6 @@ style:
 
 
 clean:
-	rm -f $(OBJS) $(TARGETS)
+	rm -f $(OBJS) 
 
 
