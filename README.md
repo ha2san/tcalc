@@ -12,4 +12,5 @@ $ tcalc
 2.5
 ```
 
-#project not finished
+#TODO:
+    double as input

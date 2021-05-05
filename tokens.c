@@ -47,36 +47,23 @@ size_t getUntil(size_t* from,char* input,Tokens* t)
 
     switch (input[*from]) {
     case '(':
-        t->type = LPARENTH;
-        return until;
-        break;
+        t->type = LPARENTH; return until;
     case ')':
-        t->type = RPARENTH;
-        return until;
-        break;
+        t->type = RPARENTH; return until;
     case '+':
-        t->type = PLUS;
-        return until;
-        break;
+        t->type = PLUS; return until;
     case '*':
-        t->type = TIME;
-        return until;
-        break;
+        t->type = TIME; return until;
     case '^':
-        t->type = POWER;
-        return until;
+        t->type = POWER; return until;
     case '/':
-        t->type = DIVIDE;
-        return until;
-        break;
+        t->type = DIVIDE; return until;
     case '-':
         t->type = MINUS;
         if(isNumber(input[*from-1]) == 0 && input[*from-1] != ')' ) {
             return whileNumber(*from,input);
-        } else {
-            return until;
-        }
-        break;
+        } else return until;
+        
     case ' ':
         (*from)++;
         return getUntil(from,input,t);
