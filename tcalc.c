@@ -20,6 +20,8 @@ int main(int argc, char *argv[])
         free_list_tokens(tok);
 
     } else {
+        printf("write \"clear\" to clear the screen\n"
+              "write \"q\" to exit\n");
         do {
             char input[100];
             printf("> ");
@@ -30,10 +32,13 @@ int main(int argc, char *argv[])
             } while(input[index-1] != '\n');
             input[index-1] = 0;
             if(!strcmp(input,"q")) return 0;
-            List_tokens* tok = get_tokens(input);
-            if(tok == NULL)  return ERROR;
-            else  printf("%g\n",do_calculation(tok));
-            free_list_tokens(tok);
+            else if(!strcmp(input,"clear")) system("clear");
+            else{
+                List_tokens* tok = get_tokens(input);
+                if(tok == NULL)  return ERROR;
+                else  printf("%g\n",do_calculation(tok));
+                free_list_tokens(tok);
+            }
         } while (1);
     }
     return 0;

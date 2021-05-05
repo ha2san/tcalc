@@ -100,7 +100,7 @@ double postfix_calculation(List_tokens* list_token)
     size_t index = 0;
     for(int i = 0; i< list_token->size; i++) {
         if(list_token->elems[i].type == NUMBER) {
-            s[index++] = atoi(list_token->elems[i].value);
+            s[index++] = atof(list_token->elems[i].value);
         } else {
             double y = s[--index];
             double x = s[--index];

@@ -8,9 +8,10 @@ $ tcalc "3*(2+1)"
 or
 ```
 $ tcalc
-> (3+2)/2
-2.5
+> 1.5*9.8+3.2
+17.9
 ```
 
-#TODO:
-    double as input
+operands: + - * ^
+
+   

@@ -88,9 +88,12 @@ size_t getUntil(size_t* from,char* input,Tokens* t)
 size_t whileNumber(size_t from, char* input)
 {
     size_t until = from+1;
+    int haveAPoint = 0;//how to handle multiple point => error ??
     while (until <= strlen(input)) {
-        if(isNumber(input[until])) until++;
-        else return until;
+        if(isNumber(input[until]) || (input[until] == '.' && haveAPoint == 0)){
+            haveAPoint = 1;
+            until++;
+        }        else return until;
     }
     return until;
 }
