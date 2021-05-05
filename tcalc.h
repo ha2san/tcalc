@@ -33,6 +33,9 @@ struct _list_tokens {
     int size; // a negative size mean that an error had occured
 };
 
+void print_token(Tokens t);
+
+void print_list_tokens(List_tokens const* list);
 
 /**
  * @brief
@@ -42,7 +45,7 @@ struct _list_tokens {
  *
  * @return
  */
-size_t getUntil(size_t from,char* input,Tokens* t);
+size_t getUntil(size_t* from,char* input,Tokens* t);
 
 /**
  * @brief

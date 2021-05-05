@@ -4,7 +4,6 @@
 double do_calculation(List_tokens* list_token)
 {
     tokens_to_postfix(list_token);
-    putchar('\n');
     double ret = postfix_calculation(list_token);
     return ret;
 }

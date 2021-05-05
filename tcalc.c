@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
             input[index-1] = 0;
             if(!strcmp(input,"q")) return 0;
             List_tokens* tok = get_tokens(input);
-
+            print_list_tokens(tok);
             if(tok == NULL)  return ERROR;
             else  printf("%lf\n",do_calculation(tok));
         } while (1);

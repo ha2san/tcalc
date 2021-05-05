@@ -1,4 +1,4 @@
-TARGETS:= style tcalc
+TARGETS:= tcalc
 
 CC=gcc
 

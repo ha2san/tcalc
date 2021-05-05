@@ -1,5 +1,17 @@
 #include "tcalc.h"
 
+void print_token(Tokens t)
+{
+    printf("%s -> %d\n",t.value,t.type);
+}
+
+void print_list_tokens(List_tokens const* list)
+{
+    for (int i = 0; i < list->size; ++i) {
+       print_token(list->elems[i]);
+    }
+}
+
 List_tokens* get_tokens(char* input)
 {
     size_t input_length = strlen(input);
@@ -7,7 +19,7 @@ List_tokens* get_tokens(char* input)
     size_t from = 0, until = 0, index = 0 ;
 
     while(until < input_length) {
-        until = getUntil(from,input,&tokens_array[index]);
+        until = getUntil(&from,input,&tokens_array[index]);
         size_t length = until - from;
         tokens_array[index].value = calloc(sizeof(char),length+1);
         strncpy(tokens_array[index].value,input+from,length);
@@ -29,11 +41,11 @@ List_tokens* get_tokens(char* input)
 }
 
 
-size_t getUntil(size_t from,char* input,Tokens* t)
+size_t getUntil(size_t* from,char* input,Tokens* t)
 {
-    size_t until = from+1;
+    size_t until = (*from)+1;
 
-    switch (input[from]) {
+    switch (input[*from]) {
     case '(':
         t->type = LPARENTH;
         return until;
@@ -56,15 +68,18 @@ size_t getUntil(size_t from,char* input,Tokens* t)
         break;
     case '-':
         t->type = MINUS;
-        if(isNumber(input[from-1]) == 0 && input[from-1] != ')' ) {
-            return whileNumber(from,input);
+        if(isNumber(input[*from-1]) == 0 && input[*from-1] != ')' ) {
+            return whileNumber(*from,input);
         } else {
             return until;
         }
         break;
+    case ' ':
+        (*from)++;
+        return getUntil(from,input,t);
     default:
         t->type = NUMBER;
-        return whileNumber(from,input);
+        return whileNumber(*from,input);
     }
 
 }
