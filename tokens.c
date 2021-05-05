@@ -8,7 +8,7 @@ void print_token(Tokens t)
 void print_list_tokens(List_tokens const* list)
 {
     for (int i = 0; i < list->size; ++i) {
-       print_token(list->elems[i]);
+        print_token(list->elems[i]);
     }
 }
 
@@ -63,7 +63,7 @@ size_t getUntil(size_t* from,char* input,Tokens* t)
         if(isNumber(input[*from-1]) == 0 && input[*from-1] != ')' ) {
             return whileNumber(*from,input);
         } else return until;
-        
+
     case ' ':
         (*from)++;
         return getUntil(from,input,t);

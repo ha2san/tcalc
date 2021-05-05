@@ -80,13 +80,13 @@ void tokens_to_postfix(List_tokens* list_token)
 
 double calcul(double x, double y, TYPE t)
 {
-    switch (t){
-        case PLUS: return x+y;
-        case MINUS: return x-y;
-        case TIME: return x*y;
-        case DIVIDE: return x/y;
-        case POWER : return pow(x,y);
-        default: return 0;
+    switch (t) {
+    case PLUS: return x+y;
+    case MINUS: return x-y;
+    case TIME: return x*y;
+    case DIVIDE: return x/y;
+    case POWER : return pow(x,y);
+    default: return 0;
     }
 }
 
@@ -96,14 +96,14 @@ double postfix_calculation(List_tokens* list_token)
 
     double s[MAX];
     size_t index = 0;
-    for(int i = 0; i< list_token->size;i++){
-        if(list_token->elems[i].type == NUMBER){
+    for(int i = 0; i< list_token->size; i++) {
+        if(list_token->elems[i].type == NUMBER) {
             s[index++] = atoi(list_token->elems[i].value);
-        }else{
+        } else {
             double y = s[--index];
             double x = s[--index];
             s[index++] = calcul(x,y,list_token->elems[i].type);
         }
     }
     return s[--index];
-    }
+}

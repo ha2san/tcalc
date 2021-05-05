@@ -3,7 +3,7 @@
 void help(void)
 {
     printf("TCALC: terminal calculator\n"
-            "USAGE: operation\n");
+           "USAGE: operation\n");
 }
 
 int main(int argc, char *argv[])
