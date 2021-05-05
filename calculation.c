@@ -1,5 +1,8 @@
 #include "tcalc.h"
 #include "data_structure.h"
+#include <math.h>
+
+typedef int type_el; // change to double
 
 double do_calculation(List_tokens* list_token)
 {
@@ -63,7 +66,6 @@ void tokens_to_postfix(List_tokens* list_token)
         push(output,pop(memory));
     }
 
-    print_stack(output);
 
     list_token->size =new_size;
     list_token->elems = realloc(list_token->elems,(size_t)new_size);
@@ -76,8 +78,32 @@ void tokens_to_postfix(List_tokens* list_token)
     stack_free(memory);
 }
 
+double calcul(double x, double y, TYPE t)
+{
+    switch (t){
+        case PLUS: return x+y;
+        case MINUS: return x-y;
+        case TIME: return x*y;
+        case DIVIDE: return x/y;
+        case POWER : return pow(x,y);
+        default: return 0;
+    }
+}
+
 double postfix_calculation(List_tokens* list_token)
 {
     //TODO
-    return 0;
-}
+
+    double s[MAX];
+    size_t index = 0;
+    for(int i = 0; i< list_token->size;i++){
+        if(list_token->elems[i].type == NUMBER){
+            s[index++] = atoi(list_token->elems[i].value);
+        }else{
+            double y = s[--index];
+            double x = s[--index];
+            s[index++] = calcul(x,y,list_token->elems[i].type);
+        }
+    }
+    return s[--index];
+    }

@@ -62,6 +62,9 @@ size_t getUntil(size_t* from,char* input,Tokens* t)
         t->type = TIME;
         return until;
         break;
+    case '^':
+        t->type = POWER;
+        return until;
     case '/':
         t->type = DIVIDE;
         return until;

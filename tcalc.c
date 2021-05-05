@@ -1,12 +1,22 @@
 #include "tcalc.h"
 
+void help(void)
+{
+    printf("TCALC: terminal calculator\n"
+            "USAGE: operation\n");
+}
+
 int main(int argc, char *argv[])
 {
     if(argc > 1) {
+        if(!strcmp(argv[1],"-h") || !strcmp(argv[1],"--help")) {
+            help();
+            return 0;
+        }
         List_tokens* tok = get_tokens(*(argv+1));
 
         if(tok == NULL)  return ERROR;
-        else  printf("%lf\n",do_calculation(tok));
+        else  printf("%g\n",do_calculation(tok));
 
     } else {
         do {
@@ -20,9 +30,8 @@ int main(int argc, char *argv[])
             input[index-1] = 0;
             if(!strcmp(input,"q")) return 0;
             List_tokens* tok = get_tokens(input);
-            print_list_tokens(tok);
             if(tok == NULL)  return ERROR;
-            else  printf("%lf\n",do_calculation(tok));
+            else  printf("%g\n",do_calculation(tok));
         } while (1);
     }
     return 0;

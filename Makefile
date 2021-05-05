@@ -8,6 +8,8 @@ CFLAGS += -Wextra -Wfloat-equal -Wshadow                         \
 -Wpointer-arith -Wbad-function-cast -Wcast-align -Wwrite-strings \
 -Wconversion -Wunreachable-code
 
+LDLIBS = -lm
+
 all:: $(TARGETS)
 OBJS:= tcalc.o tokens.o calculation.o data_structure.o
 
