@@ -67,8 +67,6 @@ void tokens_to_postfix(List_tokens* list_token)
     }
 
 
-    printf("old size => %d\n",list_token->size);
-    printf("new size => %d\n",new_size);
 
     list_token->size = new_size;
     list_token->elems = realloc(list_token->elems,(size_t)new_size*sizeof(Tokens));
