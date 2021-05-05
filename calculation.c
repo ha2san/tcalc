@@ -67,8 +67,14 @@ void tokens_to_postfix(List_tokens* list_token)
     }
 
 
-    list_token->size =new_size;
-    list_token->elems = realloc(list_token->elems,(size_t)new_size);
+    printf("old size => %d\n",list_token->size);
+    printf("new size => %d\n",new_size);
+
+    list_token->size = new_size;
+    list_token->elems = realloc(list_token->elems,(size_t)new_size*sizeof(Tokens));
+
+    if(list_token->elems == NULL) fprintf(stderr,"MEMORY ERROR");
+
 
     for (int i = list_token->size-1; i >= 0; --i) {
         list_token->elems[i] = pop(output);
@@ -92,8 +98,6 @@ double calcul(double x, double y, TYPE t)
 
 double postfix_calculation(List_tokens* list_token)
 {
-    //TODO
-
     double s[MAX];
     size_t index = 0;
     for(int i = 0; i< list_token->size; i++) {

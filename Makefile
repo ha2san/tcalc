@@ -6,9 +6,9 @@ CFLAGS = -std=c11 -Wall -pedantic -g
 
 CFLAGS += -Wextra -Wfloat-equal -Wshadow                         \
 -Wpointer-arith -Wbad-function-cast -Wcast-align -Wwrite-strings \
--Wconversion -Wunreachable-code
+-Wconversion -Wunreachable-code 
 
-LDLIBS = -lm
+LDLIBS = -lm 
 
 all:: $(TARGETS)
 OBJS:= tcalc.o tokens.o calculation.o data_structure.o

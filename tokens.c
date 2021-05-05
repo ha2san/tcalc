@@ -44,7 +44,7 @@ List_tokens* get_tokens(char* input)
 void free_list_tokens(List_tokens* list)
 {
     if(list != NULL){
-        if(list->elems != NULL) free(list->elems); 
+        if(list->elems != NULL) free(list->elems);
         free(list);
     }
 }
