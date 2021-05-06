@@ -35,7 +35,7 @@ style:
 clean:
 	rm -f $(OBJS) 
 
-bin: all
+bin: all clean
 	cp $(TARGETS) ~/bin/
 
 

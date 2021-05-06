@@ -12,26 +12,10 @@ void print_list_tokens(List_tokens const* list)
     }
 }
 
-char* clean_from_space(char* input)
-{
-    size_t length = strlen(input);
-    size_t new_length = 0;
-    char* new_input = calloc(length+1,sizeof(char));
-    for (size_t i = 0; i < length; ++i) {
-        if(input[i] != ' '){
-            new_input[new_length++] = input[i];
-        }
-    }
-    new_input[new_length] = 0;
-    new_input = realloc(new_input,sizeof(char)*(new_length+1));
-    printf("%s\n",new_input);
-    //free(input);
-    return new_input;
-}
 
-List_tokens* get_tokens(char* _input)
+
+List_tokens* get_tokens(char* input)
 {
-    char* input = clean_from_space(_input);
     size_t input_length = strlen(input);
     Tokens* tokens_array = calloc(sizeof(Tokens),input_length);
     size_t from = 0, until = 0, index = 0 ;
@@ -48,20 +32,18 @@ List_tokens* get_tokens(char* _input)
     List_tokens* ltokens = calloc(sizeof(List_tokens),1);
     Tokens* temp = realloc(tokens_array,sizeof(Tokens)*index);
     if(temp == NULL){
-        free(input);
         free(tokens_array);
         free_list_tokens(ltokens);
         fprintf(stderr,"Memory issue");
         return NULL;
     }
-    tokens_array = temp; 
+    tokens_array = temp;
     ltokens->elems = tokens_array;
     ltokens->size = control_parenthesis(input,index);
 
-    free(input);
     if(ltokens->size == ERR_PARENTHESIS ) {
         free_list_tokens(ltokens);
-        fprintf(stderr,"Il y a une erreur avec les parenthèses\n");
+        fprintf(stderr,"Syntax Error (parenthesis)\n");
         return NULL;
     }
 
@@ -139,9 +121,56 @@ int control_parenthesis(char* input, size_t size)
             in--;
         }
 
+        if(in < 0) return ERR_PARENTHESIS;
+
     }
     if(in != 0) {
         return ERR_PARENTHESIS;
     }
     return (int)size;
+}
+
+
+
+
+int syntax_checker(List_tokens const* list)
+{
+    switch (list->elems[0].type) {
+        case LPARENTH:
+        case NUMBER:
+            break;
+        default: return ERR_BAD_START;
+    }
+
+    for (int i = 1; i < list->size; ++i) {
+        TYPE before = list->elems[i-1].type;
+        switch(list->elems[i].type){
+            case NUMBER:
+                if(before == NUMBER || before == RPARENTH)
+                    return ERR_LEFT_BEFORE_NUMBER;
+                break;
+            case MINUS:
+            case PLUS:
+            case TIME:
+            case DIVIDE:
+            case POWER:
+            case RPARENTH:
+                if(before != NUMBER && before != RPARENTH)
+                    return ERR_SYNTAX;
+                break;
+            case LPARENTH: if (before == LPARENTH) return ERR_EMPTY_PARENTHESIS;
+        }
+    }
+    return 0;
+}
+
+void print_syntax_error(int error)
+{
+    switch(error){
+        case ERR_SYNTAX:break;
+        case ERR_EMPTY_PARENTHESIS: fprintf(stderr,"Parenthesis \")(\"\n");break;
+        case ERR_LEFT_BEFORE_NUMBER : fprintf(stderr,"Lefth parenthesis before a number\n");break;
+        case ERR_BAD_START: fprintf(stderr,"Bad start\n");
+        default:break;
+    }
 }

@@ -7,7 +7,13 @@
 #define ERR_PARENTHESIS -1
 #define ERROR -1
 #define MAX 256
-enum _TYPE {NUMBER,PLUS,MINUS,TIME,DIVIDE,POWER,LPARENTH,RPARENTH,END};
+#define ERR_BAD_START -2
+#define ERR_LEFT_BEFORE_NUMBER -3
+#define ERR_SYNTAX -4
+#define ERR_EMPTY_PARENTHESIS -5
+
+
+enum _TYPE {NUMBER,PLUS,MINUS,TIME,DIVIDE,POWER,LPARENTH,RPARENTH};
 
 typedef enum _TYPE TYPE;
 
@@ -25,11 +31,20 @@ struct _list_tokens {
     int size; // a negative size mean that an error had occured
 };
 
+/**
+ * @brief
+ *
+ * @param t
+ */
 void print_token(Tokens t);
 
+/**
+ * @brief
+ *
+ * @param list
+ */
 void print_list_tokens(List_tokens const* list);
 
-char* clean_from_space(char* input);
 
 /**
  * @brief
@@ -69,8 +84,19 @@ int isNumber(char c);
  */
 List_tokens* get_tokens(char* input);
 
+
 /**
  * @brief 
+ *
+ * @param list
+ *
+ * @return 
+ */
+int syntax_checker(List_tokens const* list);
+
+void print_syntax_error(int error);
+/**
+ * @brief
  *
  * @param list
  */
