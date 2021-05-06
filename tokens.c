@@ -46,7 +46,15 @@ List_tokens* get_tokens(char* _input)
     }
 
     List_tokens* ltokens = calloc(sizeof(List_tokens),1);
-    tokens_array = realloc(tokens_array,sizeof(Tokens)*index);
+    Tokens* temp = realloc(tokens_array,sizeof(Tokens)*index);
+    if(temp == NULL){
+        free(input);
+        free(tokens_array);
+        free_list_tokens(ltokens);
+        fprintf(stderr,"Memory issue");
+        return NULL;
+    }
+    tokens_array = temp; 
     ltokens->elems = tokens_array;
     ltokens->size = control_parenthesis(input,index);
 
@@ -66,7 +74,7 @@ void free_list_tokens(List_tokens* list)
     if(list != NULL){
         if(list->elems != NULL){
             for (int i = 0; i < list->size; ++i) {
-               free(list->elems[i].value);
+                free(list->elems[i].value);
             }
             free(list->elems);
         }
