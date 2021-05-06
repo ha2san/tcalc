@@ -76,7 +76,7 @@ void tokens_to_postfix(List_tokens* list_token)
         stack_free(output);
         stack_free(memory);
         return;
-    } 
+    }
 
 
     for (int i = list_token->size-1; i >= 0; --i) {
