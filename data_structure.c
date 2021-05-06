@@ -16,7 +16,7 @@ int push(Stack* stack, Tokens tokens)
 {
     if(stack->size >= MAX) return -1;
     else stack->tokens_list[stack->size++] = tokens;
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 Tokens pop(Stack* stack)

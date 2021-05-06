@@ -22,7 +22,7 @@ int main_calcul(char* input)
         printf("%g\n",do_calculation(tok));
         free_list_tokens(tok);
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int main(int argc, char *argv[])
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     if(argc > 1) {
         if(!strcmp(argv[1],"-h") || !strcmp(argv[1],"--help")) {
             help();
-            return 0;
+            return EXIT_SUCCESS;
         }
 
         int ret = main_calcul(argv[1]);
@@ -60,6 +60,6 @@ int main(int argc, char *argv[])
 
         } while (1);
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
 

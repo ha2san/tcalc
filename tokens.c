@@ -84,8 +84,12 @@ size_t getUntil(size_t index, size_t* from,char* input,Tokens* t)
                   } else return until;
 
         default:
-                  t[index].type = NUMBER;
-                  return whileNumber(*from,input);
+                  if(isNumber(input[*from])){
+                      t[index].type = NUMBER;
+                      return whileNumber(*from,input);
+                  }else{
+                      t[index].type = UNKNOWN; return until;
+                  }
     }
 
 }
@@ -145,23 +149,24 @@ int syntax_checker(List_tokens const* list)
     for (int i = 1; i < list->size; ++i) {
         TYPE before = list->elems[i-1].type;
         switch(list->elems[i].type){
+            case UNKNOWN: return ERR_UNKNOWN_SYMBOL;
             case NUMBER:
-                if(before == NUMBER || before == RPARENTH)
-                    return ERR_LEFT_BEFORE_NUMBER;
-                break;
+                          if(before == RPARENTH) return ERR_LEFT_BEFORE_NUMBER;
+                          if(before == NUMBER) return ERR_NUMBER_AFTER_NUMBER;
+                          break;
             case MINUS:
             case PLUS:
             case TIME:
             case DIVIDE:
             case POWER:
             case RPARENTH:
-                if(before != NUMBER && before != RPARENTH)
-                    return ERR_SYNTAX;
-                break;
+                          if(before != NUMBER && before != RPARENTH)
+                              return ERR_SYNTAX;
+                          break;
             case LPARENTH: if (before == LPARENTH) return ERR_EMPTY_PARENTHESIS;
         }
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 void print_syntax_error(int error)
@@ -170,7 +175,9 @@ void print_syntax_error(int error)
         case ERR_SYNTAX:break;
         case ERR_EMPTY_PARENTHESIS: fprintf(stderr,"Parenthesis \")(\"\n");break;
         case ERR_LEFT_BEFORE_NUMBER : fprintf(stderr,"Lefth parenthesis before a number\n");break;
-        case ERR_BAD_START: fprintf(stderr,"Bad start\n");
+        case ERR_BAD_START: fprintf(stderr,"Bad start\n");break;
+        case ERR_NUMBER_AFTER_NUMBER: fprintf(stderr,"Number after another number\n");break;
+        case ERR_UNKNOWN_SYMBOL: fprintf(stderr,"Unknown symbol\n");break;
         default:break;
     }
 }

@@ -4,16 +4,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define ERR_PARENTHESIS -1
 #define ERROR -1
 #define MAX 256
+#define ERR_PARENTHESIS -1
 #define ERR_BAD_START -2
 #define ERR_LEFT_BEFORE_NUMBER -3
 #define ERR_SYNTAX -4
 #define ERR_EMPTY_PARENTHESIS -5
+#define ERR_NUMBER_AFTER_NUMBER -6
+#define ERR_UNKNOWN_SYMBOL -7
 
 
-enum _TYPE {NUMBER,PLUS,MINUS,TIME,DIVIDE,POWER,LPARENTH,RPARENTH};
+enum _TYPE {NUMBER,PLUS,MINUS,TIME,DIVIDE,POWER,LPARENTH,RPARENTH, UNKNOWN};
 
 typedef enum _TYPE TYPE;
 
@@ -86,11 +88,11 @@ List_tokens* get_tokens(char* input);
 
 
 /**
- * @brief 
+ * @brief
  *
  * @param list
  *
- * @return 
+ * @return
  */
 int syntax_checker(List_tokens const* list);
 
