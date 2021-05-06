@@ -3,7 +3,7 @@
 void help(void)
 {
     printf("TCALC: terminal calculator\n"
-            "USAGE: operation\n");
+           "USAGE: operation\n");
 }
 
 int main_calcul(char* input)
@@ -12,13 +12,12 @@ int main_calcul(char* input)
 
     if(tok == NULL)  return ERROR;
     int error = syntax_checker(tok);
-    if (error){
+    if (error) {
         free_list_tokens(tok);
         fprintf(stderr,"SYNTAX ERROR\n");
         print_syntax_error(error);
         return -1;
-    }
-    else{
+    } else {
         printf("%g\n",do_calculation(tok));
         free_list_tokens(tok);
     }
@@ -39,7 +38,7 @@ int main(int argc, char *argv[])
 
     } else {
         printf("write \"clear\" to clear the screen\n"
-                "write \"q\" to exit\n");
+               "write \"q\" to exit\n");
         do {
             char input[MAX] = {0};
             printf("> ");
@@ -48,11 +47,11 @@ int main(int argc, char *argv[])
                 input[index] = (char) getc(stdin);
                 if(input[index] != ' ')  index++;
             } while(input[index-1] != '\n');
-            if (index > 1){
+            if (index > 1) {
                 input[index-1] = 0;
                 if(!strcmp(input,"q")) return 0;
                 else if(!strcmp(input,"clear")) system("clear");
-                else{
+                else {
                     main_calcul(input);
                     //if(ret != 0) return ret;
                 }

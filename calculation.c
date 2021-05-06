@@ -71,7 +71,7 @@ void tokens_to_postfix(List_tokens* list_token)
     list_token->size = new_size;
     list_token->elems = realloc(list_token->elems,(size_t)new_size*sizeof(Tokens));
 
-    if(list_token->elems == NULL){
+    if(list_token->elems == NULL) {
         fprintf(stderr,"MEMORY ERROR");
         stack_free(output);
         stack_free(memory);
@@ -90,12 +90,12 @@ void tokens_to_postfix(List_tokens* list_token)
 double calcul(double x, double y, TYPE t)
 {
     switch (t) {
-        case PLUS: return x+y;
-        case MINUS: return x-y;
-        case TIME: return x*y;
-        case DIVIDE: return x/y;
-        case POWER : return pow(x,y);
-        default: return 0;
+    case PLUS: return x+y;
+    case MINUS: return x-y;
+    case TIME: return x*y;
+    case DIVIDE: return x/y;
+    case POWER : return pow(x,y);
+    default: return 0;
     }
 }
 
