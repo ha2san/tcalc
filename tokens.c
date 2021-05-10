@@ -101,7 +101,7 @@ size_t whileNumber(size_t from, char* input)
     int haveAPoint = 0;//how to handle multiple point => error ??
     while (until <= strlen(input)) {
         if(isNumber(input[until]) || (input[until] == '.' && haveAPoint == 0)) {
-            haveAPoint = 1;
+            if(input[until] == '.') haveAPoint = 1;
             until++;
         }        else return until;
     }
@@ -137,18 +137,18 @@ int control_parenthesis(char* input, size_t size)
 
 
 
-int syntax_checker(List_tokens const* list)
+int syntax_checker(List_tokens const* list_tokens)
 {
-    switch (list->elems[0].type) {
+    switch (list_tokens->elems[0].type) {
     case LPARENTH:
     case NUMBER:
         break;
     default: return ERR_BAD_START;
     }
 
-    for (int i = 1; i < list->size; ++i) {
-        TYPE before = list->elems[i-1].type;
-        switch(list->elems[i].type) {
+    for (int i = 1; i < list_tokens->size; ++i) {
+        TYPE before = list_tokens->elems[i-1].type;
+        switch(list_tokens->elems[i].type) {
         case UNKNOWN: return ERR_UNKNOWN_SYMBOL;
         case NUMBER:
             if(before == RPARENTH) return ERR_LEFT_BEFORE_NUMBER;

@@ -1,6 +1,7 @@
 TARGETS:= tcalc
 
 CC=gcc
+#CC=clang
 
 CFLAGS = -std=c11 -Wall -pedantic -g
 

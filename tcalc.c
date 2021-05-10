@@ -1,3 +1,4 @@
+#define _XOPEN_SOURCE 700
 #include "tcalc.h"
 
 void help(void)
@@ -47,13 +48,12 @@ int main(int argc, char *argv[])
                 input[index] = (char) getc(stdin);
                 if(input[index] != ' ')  index++;
             } while(input[index-1] != '\n');
+            input[index-1] = 0;
             if (index > 1) {
-                input[index-1] = 0;
                 if(!strcmp(input,"q")) return 0;
                 else if(!strcmp(input,"clear")) system("clear");
                 else {
                     main_calcul(input);
-                    //if(ret != 0) return ret;
                 }
             }
 
