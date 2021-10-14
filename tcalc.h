@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #define ERROR -1
-#define MAX 256
+#define MAX 2024 
 #define ERR_PARENTHESIS -1
 #define ERR_BAD_START -2
 #define ERR_LEFT_BEFORE_NUMBER -3
