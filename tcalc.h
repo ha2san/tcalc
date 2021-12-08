@@ -141,3 +141,6 @@ void tokens_to_postfix(List_tokens* list);
  * @return
  */
 double postfix_calculation(List_tokens* list);
+
+
+char* minus_clean(char* input,int first_time);

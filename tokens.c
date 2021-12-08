@@ -12,7 +12,29 @@ void print_list_tokens(List_tokens const* list)
     }
 }
 
+char* minus_clean(char* input,int first_time)
+{
+    size_t length = strlen(input);
+    size_t new_length = length;
+    char* input_clean = calloc(length+1,sizeof(char));
+    size_t j = 0, i = 0;
+    for (;i < length; ++i,++j) {
+       if(input[i] == '-' && input[i+1] == '-') {
+            input_clean[j] = '+';
+            new_length--;
+            i++;
+       }else{
+           input_clean[j] = input[i];
+       }
+    }
 
+    if(!first_time) free(input);
+
+    if(length == new_length)
+        return input_clean;
+    else
+        return minus_clean(input_clean,0);
+}
 
 List_tokens* get_tokens(char* input)
 {

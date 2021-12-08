@@ -4,31 +4,15 @@
 void help(void)
 {
     printf("TCALC: terminal calculator\n"
-           "USAGE: operation\n");
-}
+            "usage:\n"
+            "        $ tcalc \"3*(2+1)\"\n"
+            "        9\n"
+            "        or\n"
+            "        $ tcalc\n"
+            "        > 1.5*9.8+3.2\n"
+            "        17.9\n\n"
+            "operands: + - * ^\n");
 
-char* minus_clean(char* input,int first_time)
-{
-    size_t length = strlen(input);
-    size_t new_length = length;
-    char* input_clean = calloc(length+1,sizeof(char));
-    size_t j = 0, i = 0;
-    for (;i < length; ++i,++j) {
-       if(input[i] == '-' && input[i+1] == '-') {
-            input_clean[j] = '+';
-            new_length--;
-            i++;
-       }else{
-           input_clean[j] = input[i];
-       }
-    }
-
-    if(!first_time) free(input);
-
-    if(length == new_length)
-        return input_clean;
-    else
-        return minus_clean(input_clean,0);
 }
 
 int main_calcul(char* input)
@@ -65,7 +49,7 @@ int main(int argc, char *argv[])
 
     } else {
         printf("write \"clear\" to clear the screen\n"
-               "write \"q\" to exit\n");
+                "write \"q\" or \"exit\" to exit\n");
         char list_input[MAX][MAX];
         size_t list_size = 0;
         do {
@@ -75,12 +59,18 @@ int main(int argc, char *argv[])
 
             do {
                 input[index] = (char) getc(stdin);
+
+                if(input[index] > 126 || input[index] < 0) {
+                    fprintf(stderr,"Invalid character\n");
+                    return -1;
+                }
+
                 if(input[index] != ' ')  index++;
-            } while(input[index-1] != '\n');
+            } while(input[index-1] != '\n' && input[index-1]);
 
             input[index-1] = 0;
             if (index > 1) {
-                if(!strcmp(input,"q")) return EXIT_SUCCESS;
+                if(!strcmp(input,"q") || !strcmp(input,"exit")) return EXIT_SUCCESS;
                 else if(!strcmp(input,"clear")) system("clear");
                 else {
                     strcpy(list_input[list_size++],input);

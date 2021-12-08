@@ -1,9 +1,10 @@
 TARGETS:= tcalc
 
-CC=gcc
+CC=/usr/bin/afl-gcc
+#CC=gcc
 #CC=clang
 
-CFLAGS = -std=c11 -Wall -pedantic -g
+CFLAGS = -std=c11 -Wall -pedantic -g -fno-omit-frame-pointer
 
 CFLAGS += -Wextra -Wfloat-equal -Wshadow                         \
 -Wpointer-arith -Wbad-function-cast -Wcast-align -Wwrite-strings \
