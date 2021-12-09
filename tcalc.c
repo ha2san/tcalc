@@ -66,7 +66,8 @@ int main(int argc, char *argv[])
                 }
 
                 if(input[index] != ' ')  index++;
-            } while(input[index-1] != '\n' && input[index-1]);
+                if(index >= MAX) printf("Too big\n");
+            } while(input[index-1] != '\n' && input[index-1] && index < MAX);
 
             input[index-1] = 0;
             if (index > 1) {
