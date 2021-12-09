@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct time{
+struct time {
     size_t secondes;
     size_t minutes;
     size_t hours;

@@ -4,14 +4,14 @@
 void help(void)
 {
     printf("TCALC: terminal calculator\n"
-            "usage:\n"
-            "        $ tcalc \"3*(2+1)\"\n"
-            "        9\n"
-            "        or\n"
-            "        $ tcalc\n"
-            "        > 1.5*9.8+3.2\n"
-            "        17.9\n\n"
-            "operands: + - * ^\n");
+           "usage:\n"
+           "        $ tcalc \"3*(2+1)\"\n"
+           "        9\n"
+           "        or\n"
+           "        $ tcalc\n"
+           "        > 1.5*9.8+3.2\n"
+           "        17.9\n\n"
+           "operands: + - * ^\n");
 
 }
 
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 
     } else {
         printf("write \"clear\" to clear the screen\n"
-                "write \"q\" or \"exit\" to exit\n");
+               "write \"q\" or \"exit\" to exit\n");
         char list_input[MAX][MAX];
         size_t list_size = 0;
         do {

@@ -19,11 +19,10 @@ int check_syntax(char* string, size_t length)
         if(isdigit(string[i])) {
             space = 0;
             digit = 0;
-        }
-        else if (isalpha(string[i])){
+        } else if (isalpha(string[i])) {
             if(i==0)return SYNTAX_ERROR;
             if(digit) return SYNTAX_ERROR;
-            while(string[i] != array[j]){
+            while(string[i] != array[j]) {
                 j++;
                 if(j>=max_length) return SYNTAX_ERROR;
             }
@@ -31,9 +30,9 @@ int check_syntax(char* string, size_t length)
             space = 1;
             digit = 1;
 
-        }else if (isspace(string[i])) {
-            if(space);else return SYNTAX_ERROR;
-        }else return SYNTAX_ERROR;
+        } else if (isspace(string[i])) {
+            if(space); else return SYNTAX_ERROR;
+        } else return SYNTAX_ERROR;
     }
     return 0;
 }
@@ -42,24 +41,24 @@ int check_syntax(char* string, size_t length)
 struct time* string_to_timer(char* string, size_t length)
 {
     int check = check_syntax(string,length);
-    if(check){
+    if(check) {
         printf("syntax error\n");
         return NULL;
     }
 
     struct time* time = calloc(1,sizeof(struct time));
-    size_t value = 0; 
+    size_t value = 0;
     for (size_t i = 0; i < length; ++i) {
-        if(isdigit(string[i])){
+        if(isdigit(string[i])) {
             value = value * 10 + ((size_t) string[i] - '0');
-        }else if(isspace(string[i])){
+        } else if(isspace(string[i])) {
 
-        }else{
-            switch (string[i]){
-                case 'd': time->days = value;break;
-                case 'h': time->hours = value;break;
-                case 'm': time->minutes = value;break;
-                case 's': time->secondes = value;break;
+        } else {
+            switch (string[i]) {
+            case 'd': time->days = value; break;
+            case 'h': time->hours = value; break;
+            case 'm': time->minutes = value; break;
+            case 's': time->secondes = value; break;
             }
             value = 0;
         }
@@ -69,7 +68,7 @@ struct time* string_to_timer(char* string, size_t length)
 
 void adding(size_t* time, size_t* upper_time,size_t LIMIT)
 {
-    if(*time >= LIMIT){
+    if(*time >= LIMIT) {
         size_t new_value = *time % LIMIT;
         size_t add_upper_value = *time / LIMIT;
         *time = new_value;
@@ -87,7 +86,7 @@ void arrange(struct time* timer)
 
 void print_helper(const char* str,const size_t* value)
 {
-    if(*value != 0){
+    if(*value != 0) {
         printf("%zu %s",*value,str);
         if(*value > 1)
             printf("s ");

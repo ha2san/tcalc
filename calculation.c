@@ -15,15 +15,18 @@ int same_level(TYPE a,TYPE b)
 {
     int ret = 0;
     switch (a) {
-    case MINUS:
-    case PLUS:
-        if(b == MINUS || b == PLUS) ret = 1;
-        break;
-    case TIME:
-    case DIVIDE:
-        if(b == TIME || b == DIVIDE) ret =  1;
-        break;
-    default: ret = 0;
+        case MODULO:
+            if(b == MODULO) ret = 1;
+            break;
+        case MINUS:
+        case PLUS:
+            if(b == MINUS || b == PLUS) ret = 1;
+            break;
+        case TIME:
+        case DIVIDE:
+            if(b == TIME || b == DIVIDE) ret =  1;
+            break;
+        default: ret = 0;
     }
     return ret;
 }
@@ -55,10 +58,10 @@ void tokens_to_postfix(List_tokens* list_token)
     int new_size = 0;
     for (int i = 0; i < list_token->size; ++i) {
         switch (list_token->elems[i].type) {
-        case NUMBER: push(output,list_token->elems[i]); new_size++; break;
-        case LPARENTH: push(memory,list_token->elems[i]); break;
-        case RPARENTH: stack_left_parenth(output,memory); break;
-        default: operand(output,memory,list_token->elems[i]); new_size++;
+            case NUMBER: push(output,list_token->elems[i]); new_size++; break;
+            case LPARENTH: push(memory,list_token->elems[i]); break;
+            case RPARENTH: stack_left_parenth(output,memory); break;
+            default: operand(output,memory,list_token->elems[i]); new_size++;
         }
     }
 
@@ -86,17 +89,27 @@ void tokens_to_postfix(List_tokens* list_token)
     stack_free(output);
     stack_free(memory);
 }
-
+double modulo_calcul(double x, double y)
+{
+    int xInt = (int)x;
+    int yInt = (int)y;
+    if( fabs(xInt - x) > 0 ||fabs(yInt-y)> 0 )
+        printf("(The result might not be true: The modulo operator must take INTEGER as value)\n");
+    return  xInt%yInt;
+}
 double calcul(double x, double y, TYPE t)
 {
+    double ret = 0;
     switch (t) {
-    case PLUS: return x+y;
-    case MINUS: return x-y;
-    case TIME: return x*y;
-    case DIVIDE: return x/y;
-    case POWER : return pow(x,y);
-    default: return 0;
+        case MODULO: return modulo_calcul(x,y);
+        case PLUS: return x+y;
+        case MINUS: return x-y;
+        case TIME: return x*y;
+        case DIVIDE: return x/y;
+        case POWER : return pow(x,y);
+        default: return 0;
     }
+    return ret;
 }
 
 double postfix_calculation(List_tokens* list_token)

@@ -12,6 +12,6 @@ $ tcalc
 17.9
 ```
 
-operands: + - * ^
+operands: + - * ^ %
 
    

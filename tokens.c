@@ -18,14 +18,14 @@ char* minus_clean(char* input,int first_time)
     size_t new_length = length;
     char* input_clean = calloc(length+1,sizeof(char));
     size_t j = 0, i = 0;
-    for (;i < length; ++i,++j) {
-       if(input[i] == '-' && input[i+1] == '-') {
+    for (; i < length; ++i,++j) {
+        if(input[i] == '-' && input[i+1] == '-') {
             input_clean[j] = '+';
             new_length--;
             i++;
-       }else{
-           input_clean[j] = input[i];
-       }
+        } else {
+            input_clean[j] = input[i];
+        }
     }
 
     if(!first_time) free(input);
@@ -91,6 +91,7 @@ size_t getUntil(size_t index, size_t* from,char* input,Tokens* t)
     size_t until = (*from)+1;
 
     switch (input[*from]) {
+    case '%': t[index].type = MODULO; return until;
     case '(': t[index].type = LPARENTH; return until;
     case ')': t[index].type = RPARENTH; return until;
     case '+': t[index].type = PLUS; return until;
@@ -176,6 +177,7 @@ int syntax_checker(List_tokens const* list_tokens)
             if(before == RPARENTH) return ERR_LEFT_BEFORE_NUMBER;
             if(before == NUMBER) return ERR_NUMBER_AFTER_NUMBER;
             break;
+        case MODULO:
         case MINUS:
         case PLUS:
         case TIME:
