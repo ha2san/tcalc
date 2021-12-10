@@ -40,7 +40,7 @@ clean:
 	rm -f $(OBJS)  
 	rm -f $(TARGETS)
 
-bin: all clean
+bin: clean all
 	cp $(TARGETS) ~/bin/
 
 
