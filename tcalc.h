@@ -3,6 +3,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
 
 #define ERROR -1
 #define MAX 2024
@@ -39,6 +42,10 @@ struct _list_tokens {
 int main_calcul(char* input);
 
 char* sanitize_input(char* input, size_t length, enum INPUT where);
+
+int run_argument(const char*);
+
+int run_stdin(void);
 
 /**
  * @brief
