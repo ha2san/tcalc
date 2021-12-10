@@ -17,47 +17,6 @@ void help(void)
 
 }
 
-int main_calcul(char* input)
-{
-    char* input_clean = minus_clean(input,1);
-    List_tokens* tok = get_tokens(input_clean);
-    free(input_clean);
-
-    if(tok == NULL)  return ERROR;
-    int error = syntax_checker(tok);
-    int ret = EXIT_SUCCESS;
-    if (error) {
-        ret = EXIT_FAILURE;
-        fprintf(stderr,"SYNTAX ERROR\n");
-        print_syntax_error(error);
-    } else {
-        printf("%g\n",do_calculation(tok));
-    }
-
-    free_list_tokens(tok);
-    return ret;
-}
-
-enum INPUT{STDIN,ARGV};
-
-//TODO: put this function in another file
-//      and do real work in it
-char* sanitize_input(char* input,size_t length,enum INPUT where)
-{
-    //if STDIN free else do not free
-    //get rid of space
-    char* new_input = calloc(length+1,sizeof(char));
-    size_t index = 0;
-    for (size_t i = 0; i < length; ++i) {
-
-        if(input[i] != ' ')
-            new_input[index++] = input[i];
-    }
-    if(where == STDIN) free(input);
-    return new_input;
-}
-
-
 int main(int argc, char *argv[])
 {
     if(argc > 1) {

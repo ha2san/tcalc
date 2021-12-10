@@ -2,7 +2,27 @@
 #include "data_structure.h"
 #include <math.h>
 
-typedef int type_el; // change to double
+int main_calcul(char* input)
+{
+    char* input_clean = minus_clean(input,1);
+    List_tokens* tok = get_tokens(input_clean);
+    free(input_clean);
+
+    if(tok == NULL)  return ERROR;
+    int error = syntax_checker(tok);
+    int ret = EXIT_SUCCESS;
+    if (error) {
+        ret = EXIT_FAILURE;
+        fprintf(stderr,"SYNTAX ERROR\n");
+        print_syntax_error(error);
+    } else {
+        printf("%g\n",do_calculation(tok));
+    }
+
+    free_list_tokens(tok);
+    return ret;
+}
+
 
 double do_calculation(List_tokens* list_token)
 {

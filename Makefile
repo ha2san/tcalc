@@ -18,15 +18,16 @@ LDLIBS = -lm -lreadline
 #LDLIBS += -fsanitize=address
 
 all:: $(TARGETS)
-OBJS:= tcalc.o tokens.o calculation.o data_structure.o time.o
+OBJS:= tcalc.o tokens.o calculation.o data_structure.o time.o input.o
 
 tcalc: $(OBJS)
 
 calculation.o: calculation.c tcalc.h data_structure.h
-data_structure.o: data_structure.c data_structure.h tcalc.h
-tcalc.o: tcalc.c tcalc.h
+data_structure.o: data_structure.h tcalc.h
+input.o: input.c tcalc.h
+tcalc.o: tcalc.h 
+time.o: time.h
 tokens.o: tokens.c tcalc.h
-time.o: time.c time.h
 
 
 .PHONY : clean style
@@ -36,7 +37,8 @@ style:
 
 
 clean:
-	rm -f $(OBJS) 
+	rm -f $(OBJS)  
+	rm -f $(TARGETS)
 
 bin: all clean
 	cp $(TARGETS) ~/bin/
