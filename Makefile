@@ -10,7 +10,7 @@ CFLAGS += -Wextra -Wfloat-equal -Wshadow                         \
 -Wpointer-arith -Wbad-function-cast -Wcast-align -Wwrite-strings \
 -Wconversion -Wunreachable-code 
 
-LDLIBS = -lm 
+LDLIBS = -lm -lreadline
 
 
 

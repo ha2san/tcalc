@@ -1,5 +1,7 @@
 #define _XOPEN_SOURCE 700
 #include "tcalc.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 void help(void)
 {
@@ -23,17 +25,38 @@ int main_calcul(char* input)
 
     if(tok == NULL)  return ERROR;
     int error = syntax_checker(tok);
+    int ret = EXIT_SUCCESS;
     if (error) {
-        free_list_tokens(tok);
+        ret = EXIT_FAILURE;
         fprintf(stderr,"SYNTAX ERROR\n");
         print_syntax_error(error);
-        return -1;
     } else {
         printf("%g\n",do_calculation(tok));
-        free_list_tokens(tok);
     }
-    return EXIT_SUCCESS;
+
+    free_list_tokens(tok);
+    return ret;
 }
+
+enum INPUT{STDIN,ARGV};
+
+//TODO: put this function in another file
+//      and do real work in it
+char* sanitize_input(char* input,size_t length,enum INPUT where)
+{
+    //if STDIN free else do not free
+    //get rid of space
+    char* new_input = calloc(length+1,sizeof(char));
+    size_t index = 0;
+    for (size_t i = 0; i < length; ++i) {
+
+        if(input[i] != ' ')
+            new_input[index++] = input[i];
+    }
+    if(where == STDIN) free(input);
+    return new_input;
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -43,43 +66,39 @@ int main(int argc, char *argv[])
             return EXIT_SUCCESS;
         }
 
-        int ret = main_calcul(argv[1]);
+        char* input = sanitize_input(argv[1],strlen(argv[1]),ARGV);
+
+        int ret = main_calcul(input);
+
+        free(input);
 
         if (ret != 0) return ret;
 
     } else {
         printf("write \"clear\" to clear the screen\n"
-               "write \"q\" or \"exit\" to exit\n");
-        char list_input[MAX][MAX];
-        size_t list_size = 0;
-        do {
-            char input[MAX] = {0};
-            printf("> ");
-            size_t index = 0;
+                "write \"q\" or \"exit\" to exit\n");
+        using_history();
+        while(1){
+            char* input = readline("> ");
+            if(!input)
+                continue;
+            size_t length = strlen(input);
+            input = sanitize_input(input,length,STDIN);
+            add_history(input);
 
-            do {
-                input[index] = (char) getc(stdin);
-
-                if(input[index] > 126 || input[index] < 0) {
-                    fprintf(stderr,"Invalid character\n");
-                    return -1;
+            if (input && length > 0) {
+                if(!strcmp(input,"q") || !strcmp(input,"exit")) {
+                    free(input);
+                    break;
                 }
-
-                if(input[index] != ' ')  index++;
-                if(index >= MAX) printf("Too big\n");
-            } while(input[index-1] != '\n' && input[index-1] && index < MAX);
-
-            input[index-1] = 0;
-            if (index > 1) {
-                if(!strcmp(input,"q") || !strcmp(input,"exit")) return EXIT_SUCCESS;
                 else if(!strcmp(input,"clear")) system("clear");
                 else {
-                    strcpy(list_input[list_size++],input);
                     main_calcul(input);
                 }
             }
 
-        } while (1);
+            free(input);
+        }
     }
     return EXIT_SUCCESS;
 }
