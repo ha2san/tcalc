@@ -35,7 +35,6 @@ char* minus_clean(char* input,int first_time)
     }
 
     if(!first_time) free(input);
-    printf("DEBUG %s\n",input_clean);
 
     if(length == new_length && !start_zero)
         return input_clean;
