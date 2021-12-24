@@ -39,7 +39,7 @@ struct list_tokens {
     int size; // a negative size mean that an error had occured
 };
 
-double main_calcul(char* input);
+double main_calcul(char* input, int* error);
 
 char* sanitize_input(char* input, size_t length, enum INPUT where);
 

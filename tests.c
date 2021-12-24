@@ -8,15 +8,16 @@
 #include "tcalc.h"
 
 #define PREC 0.001
-#define calcul(x) main_calcul((char*)(x))
+#define calcul(x,ret) main_calcul((char*)(x),(&ret))
 
 START_TEST(example_test) {
-    ck_assert_double_eq_tol(calcul("--1"),1,PREC);
-    ck_assert_double_eq_tol(calcul("-(-1)"),1,PREC);
-    ck_assert_double_eq_tol(calcul("9"),9,PREC);
-    ck_assert_double_eq_tol(calcul("(3+2)"), 5,PREC);
-    ck_assert_double_eq_tol(calcul("(3+2)-1"),4,PREC);
-    ck_assert_double_eq_tol(calcul("5--2"),7,PREC);
+    int ret;
+    ck_assert_double_eq_tol(calcul("--1",ret),1,PREC);
+    ck_assert_double_eq_tol(calcul("-(-1)",ret),1,PREC);
+    ck_assert_double_eq_tol(calcul("9",ret),9,PREC);
+    ck_assert_double_eq_tol(calcul("(3+2)",ret), 5,PREC);
+    ck_assert_double_eq_tol(calcul("(3+2)-1",ret),4,PREC);
+    ck_assert_double_eq_tol(calcul("5--2",ret),7,PREC);
 }
 END_TEST
 

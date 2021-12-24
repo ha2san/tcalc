@@ -2,7 +2,7 @@
 #include "data_structure.h"
 #include <math.h>
 
-double main_calcul(char* input)
+double main_calcul(char* input,int* error_exit)
 {
     char* input_clean = minus_clean(input,1);
     List_tokens* tok = get_tokens(input_clean);
@@ -10,14 +10,14 @@ double main_calcul(char* input)
 
     if(tok == NULL)  return ERROR;
     int error = syntax_checker(tok);
-    double ret;
+    double ret = 0;
     if (error) {
-        ret = EXIT_FAILURE;
+        *error_exit = EXIT_FAILURE;
         fprintf(stderr,"SYNTAX ERROR\n");
         print_syntax_error(error);
     } else {
+        *error_exit = EXIT_SUCCESS;
         ret = do_calculation(tok);
-        printf("%g\n",ret);
     }
 
     free_list_tokens(tok);

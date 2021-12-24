@@ -45,7 +45,12 @@ double run_argument(const char* argv)
 
     if(!input) return EXIT_FAILURE;
 
-    double ret = main_calcul(input);
+    int error;
+    double ret = main_calcul(input,&error);
+    if(error == EXIT_FAILURE){
+        return error;
+    }
+    printf("%g\n",ret);
 
     if(input) free(input);
 
@@ -72,7 +77,9 @@ int run_stdin(void)
                 break;
             } else if(!strcmp(input,"clear")) system("clear");
             else {
-                main_calcul(input);
+                int error;
+                double calcul = main_calcul(input,&error);
+                if(error == EXIT_SUCCESS) printf("%g\n",calcul);
             }
         }
 
