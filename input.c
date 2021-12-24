@@ -8,7 +8,7 @@ char* sanitize_input(char* input,size_t length,enum INPUT where)
 
         if(input[i] != ' ')
             new_input[index++] = input[i];
-        if(input[i] < 0 || input[i] > 126){
+        if(input[i] < 0 || input[i] > 126) {
             free(new_input);
             new_input = NULL;
             if(where == STDIN) free(input);
@@ -36,49 +36,48 @@ void help(void)
 
 double run_argument(const char* argv)
 {
-        if(!strcmp(argv,"-h") || !strcmp(argv,"--help")) {
-            help();
-            return EXIT_SUCCESS;
-        }
+    if(!strcmp(argv,"-h") || !strcmp(argv,"--help")) {
+        help();
+        return EXIT_SUCCESS;
+    }
 
-        char* input = sanitize_input((char*)argv,strlen(argv),ARGV);
+    char* input = sanitize_input((char*)argv,strlen(argv),ARGV);
 
-        if(!input) return EXIT_FAILURE;
+    if(!input) return EXIT_FAILURE;
 
-        double ret = main_calcul(input);
+    double ret = main_calcul(input);
 
-        if(input) free(input);
+    if(input) free(input);
 
-        return ret;
+    return ret;
 }
 
 
 int run_stdin(void)
 {
-        printf("write \"clear\" to clear the screen\n"
-                "write \"q\" or \"exit\" to exit\n");
-        using_history();
-        while(1){
-            char* input = readline("> ");
-            if(!input)
-                continue;
-            size_t length = strlen(input);
-            input = sanitize_input(input,length,STDIN);
-            add_history(input);
+    printf("write \"clear\" to clear the screen\n"
+           "write \"q\" or \"exit\" to exit\n");
+    using_history();
+    while(1) {
+        char* input = readline("> ");
+        if(!input)
+            continue;
+        size_t length = strlen(input);
+        input = sanitize_input(input,length,STDIN);
+        add_history(input);
 
-            if (input && length > 0) {
-                if(!strcmp(input,"q") || !strcmp(input,"exit")) {
-                    free(input);
-                    break;
-                }
-                else if(!strcmp(input,"clear")) system("clear");
-                else {
-                    main_calcul(input);
-                }
+        if (input && length > 0) {
+            if(!strcmp(input,"q") || !strcmp(input,"exit")) {
+                free(input);
+                break;
+            } else if(!strcmp(input,"clear")) system("clear");
+            else {
+                main_calcul(input);
             }
-
-            if(input)free(input);
         }
-        return EXIT_SUCCESS;
+
+        if(input)free(input);
+    }
+    return EXIT_SUCCESS;
 }
 
