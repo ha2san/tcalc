@@ -18,32 +18,32 @@
 #define ERR_UNKNOWN_SYMBOL -7
 
 
-enum _TYPE {NUMBER,MODULO,PLUS,MINUS,TIME,DIVIDE,POWER,LPARENTH,RPARENTH, UNKNOWN};
+enum TYPE {NUMBER,MODULO,PLUS,MINUS,TIME,DIVIDE,POWER,LPARENTH,RPARENTH, UNKNOWN};
 
 enum INPUT{STDIN,ARGV};
 
-typedef enum _TYPE TYPE;
+typedef enum TYPE TYPE;
 
-typedef struct _tokens Tokens;
+typedef struct tokens Tokens;
 
-typedef struct _list_tokens List_tokens;
+typedef struct list_tokens List_tokens;
 
-struct _tokens {
+struct tokens {
     char* value;
     TYPE type;
 };
 
 
-struct _list_tokens {
+struct list_tokens {
     Tokens* elems;
     int size; // a negative size mean that an error had occured
 };
 
-int main_calcul(char* input);
+double main_calcul(char* input);
 
 char* sanitize_input(char* input, size_t length, enum INPUT where);
 
-int run_argument(const char*);
+double run_argument(const char*);
 
 int run_stdin(void);
 

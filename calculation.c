@@ -2,7 +2,7 @@
 #include "data_structure.h"
 #include <math.h>
 
-int main_calcul(char* input)
+double main_calcul(char* input)
 {
     char* input_clean = minus_clean(input,1);
     List_tokens* tok = get_tokens(input_clean);
@@ -10,13 +10,14 @@ int main_calcul(char* input)
 
     if(tok == NULL)  return ERROR;
     int error = syntax_checker(tok);
-    int ret = EXIT_SUCCESS;
+    double ret;
     if (error) {
         ret = EXIT_FAILURE;
         fprintf(stderr,"SYNTAX ERROR\n");
         print_syntax_error(error);
     } else {
-        printf("%g\n",do_calculation(tok));
+        ret = do_calculation(tok);
+        printf("%g\n",ret);
     }
 
     free_list_tokens(tok);
@@ -119,7 +120,6 @@ double modulo_calcul(double x, double y)
 }
 double calcul(double x, double y, TYPE t)
 {
-    double ret = 0;
     switch (t) {
     case MODULO: return modulo_calcul(x,y);
     case PLUS: return x+y;
@@ -129,7 +129,6 @@ double calcul(double x, double y, TYPE t)
     case POWER : return pow(x,y);
     default: return 0;
     }
-    return ret;
 }
 
 double postfix_calculation(List_tokens* list_token)

@@ -8,6 +8,12 @@ char* sanitize_input(char* input,size_t length,enum INPUT where)
 
         if(input[i] != ' ')
             new_input[index++] = input[i];
+        if(input[i] < 0 || input[i] > 126){
+            free(new_input);
+            new_input = NULL;
+            if(where == STDIN) free(input);
+            return NULL;
+        }
     }
     if(where == STDIN) free(input);
     return new_input;
@@ -28,7 +34,7 @@ void help(void)
 }
 
 
-int run_argument(const char* argv)
+double run_argument(const char* argv)
 {
         if(!strcmp(argv,"-h") || !strcmp(argv,"--help")) {
             help();
@@ -37,13 +43,13 @@ int run_argument(const char* argv)
 
         char* input = sanitize_input((char*)argv,strlen(argv),ARGV);
 
-        int ret = main_calcul(input);
+        if(!input) return EXIT_FAILURE;
 
-        free(input);
+        double ret = main_calcul(input);
 
-        if (ret != 0) return ret;
+        if(input) free(input);
 
-        return EXIT_SUCCESS;
+        return ret;
 }
 
 
@@ -71,7 +77,7 @@ int run_stdin(void)
                 }
             }
 
-            free(input);
+            if(input)free(input);
         }
         return EXIT_SUCCESS;
 }

@@ -22,6 +22,8 @@ OBJS:= tcalc.o tokens.o calculation.o data_structure.o time.o input.o
 
 tcalc: $(OBJS)
 
+temp: $(OBJS)
+
 calculation.o: calculation.c tcalc.h data_structure.h
 data_structure.o: data_structure.h tcalc.h
 input.o: input.c tcalc.h

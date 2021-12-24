@@ -7,7 +7,7 @@
 
 #define SYNTAX_ERROR 1
 
-int check_syntax(char* string, size_t length)
+int check_syntax(const char* string, size_t length)
 {
     char array[] = {'d','h','m','s'};
     size_t max_length = sizeof(array)/sizeof(*array);

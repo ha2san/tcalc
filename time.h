@@ -21,15 +21,15 @@ void adding(size_t* time, size_t* upper_time,size_t LIMIT);
 
 void arrange(struct time* timer);
 
-void print(const struct time* const timer);
+void print(const struct time* timer);
 
-double conversion(const struct time* const timer,enum time_unit unit);
+double conversion(const struct time* timer,enum time_unit unit);
 
-double to_seconds(const struct time* const timer);
+double to_seconds(const struct time* timer);
 
-double to_minuts(const struct time* const timer);
+double to_minuts(const struct time* timer);
 
-double to_hours(const struct time* const timer);
+double to_hours(const struct time* timer);
 
-double to_days(const struct time* const timer);
+double to_days(const struct time* timer);
 
