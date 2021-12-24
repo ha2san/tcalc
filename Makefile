@@ -1,4 +1,5 @@
 TARGETS:= tcalc
+PWD = ${shell pwd}
 
 #CC=/usr/bin/afl-gcc
 CC=gcc
@@ -10,19 +11,17 @@ CFLAGS += -Wextra -Wfloat-equal -Wshadow                         \
 -Wpointer-arith -Wbad-function-cast -Wcast-align -Wwrite-strings \
 -Wconversion -Wunreachable-code 
 
-LDLIBS = -lm -lreadline
-
-
+LDLIBS = -lm -lreadline 
+LDLIBS  += -lcheck -lm -lrt -pthread -lsubunit
 
 #CFLAGS += -fsanitize=address
 #LDLIBS += -fsanitize=address
 
-all:: $(TARGETS)
+
+all:: $(TARGETS) test
 OBJS:= tcalc.o tokens.o calculation.o data_structure.o time.o input.o
 
 tcalc: $(OBJS)
-
-temp: $(OBJS)
 
 calculation.o: calculation.c tcalc.h data_structure.h
 data_structure.o: data_structure.h tcalc.h
@@ -32,7 +31,16 @@ time.o: time.h
 tokens.o: tokens.c tcalc.h
 
 
-.PHONY : clean style
+test: tests 
+	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PWD} ./tests
+
+tests: tokens.o calculation.o data_structure.o time.o input.o
+
+
+tests.o: tests.c tcalc.h data_structure.h 
+
+
+.PHONY : clean style test
 
 style:
 	astyle -n -o -A8 -xt0 *.[ch]
@@ -40,9 +48,9 @@ style:
 
 clean:
 	rm -f $(OBJS)  
+	rm -f tests
 	rm -f $(TARGETS)
 
 bin: clean all
 	cp $(TARGETS) ~/bin/
-
 
