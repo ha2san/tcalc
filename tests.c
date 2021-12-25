@@ -14,9 +14,7 @@ START_TEST(example_test)
 {
     int ret;
     calcul("--1",1);
-    printf("---------------------\n");
     calcul("-(-1)",1);
-    printf("---------------------\n");
     calcul("9",9);
     calcul("(3+2)", 5);
     calcul("(3+2)-1",4);
@@ -31,13 +29,21 @@ START_TEST(example_test)
     calcul("2^8*2",512);
     calcul("1*2+3/2",3.5);
     calcul("1*2%4/2",0);
+    calcul("3.4%6",3);
 
     double value = run_argument("1+1");
     ck_assert_double_eq_tol((int)value,2,PREC);
 
     value = run_argument("--help");
     ck_assert_int_eq((int)value,EXIT_SUCCESS);
+
+    value = run_stdin();
+    ck_assert_int_eq((int)value,EXIT_SUCCESS);
+
+    value = run_stdin();
+    ck_assert_int_eq((int)value,EXIT_SUCCESS);
 }
+
 END_TEST
 
 START_TEST(error_test)
