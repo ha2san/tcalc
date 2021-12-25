@@ -42,7 +42,7 @@ coverage: test
 
 
 test: tests 
-	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PWD} ./tests < test_input
+	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PWD} ./tests
 
 tests: tokens.o calculation.o data_structure.o time.o input.o
 
