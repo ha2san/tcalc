@@ -18,6 +18,6 @@ jobs:
     - name: install dependencies
       run: sudo chmod +x configure && ./configure
       
-    - name: Install dependencies
-      run: make
+    - name: make test 
+      run: make test
       
