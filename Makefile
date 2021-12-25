@@ -12,7 +12,7 @@ CFLAGS += -Wextra -Wfloat-equal -Wshadow                         \
 
 
 LDLIBS = -lm -lreadline 
-LDLIBS  += -lcheck -lm -lrt -pthread -lsubunit
+LDLIBS  += -lcheck -lm
 
 #coverage
 CFLAGS += -fprofile-arcs -ftest-coverage
