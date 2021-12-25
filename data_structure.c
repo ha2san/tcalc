@@ -8,6 +8,9 @@ Stack* stack_init(void)
 
 void stack_free(Stack* s)
 {
+    for (size_t i = 0; i < s->size; ++i) {
+       free(s->tokens_list[i].value);
+    }
     if(s != NULL) free(s);
 }
 

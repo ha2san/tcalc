@@ -7,6 +7,7 @@ void print_token(Tokens t)
 
 void print_list_tokens(List_tokens const* list)
 {
+    printf("size = %d\n",list->size);
     for (int i = 0; i < list->size; ++i) {
         print_token(list->elems[i]);
     }
@@ -67,9 +68,10 @@ List_tokens* get_tokens(char* input)
     }
     tokens_array = temp;
     ltokens->elems = tokens_array;
-    ltokens->size = control_parenthesis(input,index);
+    ltokens->size = (int)index;
+    control_parenthesis(input,&ltokens->error);
 
-    if(ltokens->size == ERR_PARENTHESIS ) {
+    if(ltokens->error == ERR_PARENTHESIS ) {
         free_list_tokens(ltokens);
         fprintf(stderr,"Syntax Error (parenthesis)\n");
         return NULL;
@@ -144,7 +146,7 @@ int isNumber(char c)
 
 
 
-int control_parenthesis(char* input, size_t size)
+void control_parenthesis(char* input, int* error)
 {
     int in = 0;
     for (size_t i = 0; i < strlen(input); ++i) {
@@ -154,13 +156,12 @@ int control_parenthesis(char* input, size_t size)
             in--;
         }
 
-        if(in < 0) return ERR_PARENTHESIS;
+        if(in < 0) *error = ERR_PARENTHESIS;
 
     }
     if(in != 0) {
-        return ERR_PARENTHESIS;
+        *error =  ERR_PARENTHESIS;
     }
-    return (int)size;
 }
 
 
@@ -180,8 +181,10 @@ int syntax_checker(List_tokens const* list_tokens)
         switch(list_tokens->elems[i].type) {
         case UNKNOWN: return ERR_UNKNOWN_SYMBOL;
         case NUMBER:
-            if(before == RPARENTH) return ERR_LEFT_BEFORE_NUMBER;
-            if(before == NUMBER) return ERR_NUMBER_AFTER_NUMBER;
+            if(before == RPARENTH)
+                return ERR_LEFT_BEFORE_NUMBER;
+            if(before == NUMBER) 
+                return ERR_NUMBER_AFTER_NUMBER;
             break;
         case MODULO:
         case MINUS:
@@ -193,8 +196,15 @@ int syntax_checker(List_tokens const* list_tokens)
             if(before != NUMBER && before != RPARENTH)
                 return ERR_SYNTAX;
             break;
-        case LPARENTH: if (before == LPARENTH) return ERR_EMPTY_PARENTHESIS;
+        case LPARENTH: if (before == RPARENTH)
+                           return ERR_EMPTY_PARENTHESIS;
         }
+    }
+
+    TYPE tp = list_tokens->elems[list_tokens->size-1].type;
+
+    if(tp != NUMBER && tp != RPARENTH) {
+        return ERR_BAD_END;
     }
     return EXIT_SUCCESS;
 }

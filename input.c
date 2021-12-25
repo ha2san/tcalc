@@ -47,7 +47,8 @@ double run_argument(const char* argv)
 
     int error;
     double ret = main_calcul(input,&error);
-    if(error == EXIT_FAILURE){
+    if(error == EXIT_FAILURE) {
+        if(input) free(input);
         return error;
     }
     printf("%g\n",ret);

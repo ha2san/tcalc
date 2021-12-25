@@ -8,28 +8,68 @@
 #include "tcalc.h"
 
 #define PREC 0.001
-#define calcul(x,ret) main_calcul((char*)(x),(&ret))
+#define calcul(x,y) ck_assert_double_eq_tol(main_calcul((char*)(x),(&ret)),(y),(PREC))
 
-START_TEST(example_test) {
+START_TEST(example_test)
+{
     int ret;
-    ck_assert_double_eq_tol(calcul("--1",ret),1,PREC);
-    ck_assert_double_eq_tol(calcul("-(-1)",ret),1,PREC);
-    ck_assert_double_eq_tol(calcul("9",ret),9,PREC);
-    ck_assert_double_eq_tol(calcul("(3+2)",ret), 5,PREC);
-    ck_assert_double_eq_tol(calcul("(3+2)-1",ret),4,PREC);
-    ck_assert_double_eq_tol(calcul("5--2",ret),7,PREC);
+    calcul("--1",1);
+    printf("---------------------\n");
+    calcul("-(-1)",1);
+    printf("---------------------\n");
+    calcul("9",9);
+    calcul("(3+2)", 5);
+    calcul("(3+2)-1",4);
+    calcul("5--2",7);
+    calcul("0.32",0.32);
+    calcul("0.32+0.68",1);
+    calcul("((3))",3);
+    calcul("10%2",0);
+    calcul("10*2",20);
+    calcul("10/2",5);
+    calcul("2^8",256);
+    calcul("2^8*2",512);
+    calcul("1*2+3/2",3.5);
+    calcul("1*2%4/2",0);
+
+    double value = run_argument("1+1");
+    ck_assert_double_eq_tol((int)value,2,PREC);
+
+    value = run_argument("--help");
+    ck_assert_int_eq((int)value,EXIT_SUCCESS);
 }
 END_TEST
 
+START_TEST(error_test)
+{
+    int ret;
+
+    main_calcul((char*)"+",&ret);
+    ck_assert_int_eq(ret,EXIT_FAILURE);
+    main_calcul((char*)"((1+1)",&ret);
+    ck_assert_int_eq(ret,EXIT_FAILURE);
+    main_calcul((char*)"(3)1+2",&ret);
+    ck_assert_int_eq(ret,EXIT_FAILURE);
+    main_calcul((char*)"((3))",&ret);
+    ck_assert_int_eq(ret,EXIT_SUCCESS);
+    main_calcul((char*)"%1+1",&ret);
+    ck_assert_int_eq(ret,EXIT_FAILURE);
+    main_calcul((char*)"1&1",&ret);
+    ck_assert_int_eq(ret,EXIT_FAILURE);
+    main_calcul((char*)"()+1",&ret);
+    ck_assert_int_eq(ret,EXIT_FAILURE);
+}
+END_TEST
 
 int main()
 {
-    Suite* s = suite_create("Week 01 tests");
+    Suite* s = suite_create("tests");
     TCase *tc1 = tcase_create("basic tests");
     suite_add_tcase(s, tc1);
 
     /* Add your own tests here */
     tcase_add_test(tc1, example_test);
+    tcase_add_test(tc1, error_test);
 
     SRunner *sr = srunner_create(s);
     srunner_run_all(sr, CK_VERBOSE);

@@ -16,6 +16,7 @@
 #define ERR_EMPTY_PARENTHESIS -5
 #define ERR_NUMBER_AFTER_NUMBER -6
 #define ERR_UNKNOWN_SYMBOL -7
+#define ERR_BAD_END -8
 
 
 enum TYPE {NUMBER,MODULO,PLUS,MINUS,TIME,DIVIDE,POWER,LPARENTH,RPARENTH, UNKNOWN};
@@ -36,7 +37,8 @@ struct tokens {
 
 struct list_tokens {
     Tokens* elems;
-    int size; // a negative size mean that an error had occured
+    int size; // a negative size mean that an error had occured //finally thats not a good idea
+    int error;
 };
 
 double main_calcul(char* input, int* error);
@@ -127,7 +129,7 @@ void free_list_tokens(List_tokens* list);
  *
  * @return
  */
-int control_parenthesis(char* input, size_t size);
+void control_parenthesis(char* input, int* error);
 
 /**
  * @brief

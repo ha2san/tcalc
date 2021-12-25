@@ -57,7 +57,11 @@ void stack_left_parenth(Stack* s1, Stack* s2)
     while (!isEmpty(s2) && head(s2).type != LPARENTH) {
         push(s1,pop(s2));
     }
-    if(head(s2).type == LPARENTH) pop(s2);
+    if(head(s2).type == LPARENTH) {
+        Tokens tok = pop(s2);
+        free(tok.value);
+    }
+
 }
 
 
@@ -79,10 +83,10 @@ void tokens_to_postfix(List_tokens* list_token)
     int new_size = 0;
     for (int i = 0; i < list_token->size; ++i) {
         switch (list_token->elems[i].type) {
-        case NUMBER: push(output,list_token->elems[i]); new_size++; break;
-        case LPARENTH: push(memory,list_token->elems[i]); break;
-        case RPARENTH: stack_left_parenth(output,memory); break;
-        default: operand(output,memory,list_token->elems[i]); new_size++;
+            case NUMBER: push(output,list_token->elems[i]); new_size++; break;
+            case LPARENTH: push(memory,list_token->elems[i]); break;
+            case RPARENTH: stack_left_parenth(output,memory);free(list_token->elems[i].value); break;
+            default: operand(output,memory,list_token->elems[i]); new_size++;
         }
     }
 
@@ -121,13 +125,13 @@ double modulo_calcul(double x, double y)
 double calcul(double x, double y, TYPE t)
 {
     switch (t) {
-    case MODULO: return modulo_calcul(x,y);
-    case PLUS: return x+y;
-    case MINUS: return x-y;
-    case TIME: return x*y;
-    case DIVIDE: return x/y;
-    case POWER : return pow(x,y);
-    default: return 0;
+        case MODULO: return modulo_calcul(x,y);
+        case PLUS: return x+y;
+        case MINUS: return x-y;
+        case TIME: return x*y;
+        case DIVIDE: return x/y;
+        case POWER : return pow(x,y);
+        default: return 0;
     }
 }
 
