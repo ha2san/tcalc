@@ -1,4 +1,5 @@
 #include "tcalc.h"
+#include "time.h"
 
 char* sanitize_input(char* input,size_t length,enum INPUT where)
 {
@@ -39,6 +40,9 @@ double run_argument(const char* argv)
     if(!strcmp(argv,"-h") || !strcmp(argv,"--help")) {
         help();
         return EXIT_SUCCESS;
+    }else if(!strcmp(argv,"time")){
+        main_function();
+        return EXIT_SUCCESS;
     }
 
     char* input = sanitize_input((char*)argv,strlen(argv),ARGV);
@@ -62,7 +66,7 @@ double run_argument(const char* argv)
 int run_stdin(void)
 {
     printf("write \"clear\" to clear the screen\n"
-           "write \"q\" or \"exit\" to exit\n");
+            "write \"q\" or \"exit\" to exit\n");
     using_history();
     while(1) {
         char* input = readline("> ");
@@ -77,6 +81,8 @@ int run_stdin(void)
                 free(input);
                 break;
             } else if(!strcmp(input,"clear")) system("clear");
+            else if(!strcmp(input,"time")) main_function();
+            else if(!strcmp(input,"help")) help();
             else {
                 int error;
                 double calcul = main_calcul(input,&error);

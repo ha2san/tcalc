@@ -4,6 +4,8 @@
 #include <regex.h>
 #include <ctype.h>
 #include <string.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 #define SYNTAX_ERROR 1
 
@@ -55,10 +57,10 @@ struct time* string_to_timer(char* string, size_t length)
 
         } else {
             switch (string[i]) {
-            case 'd': time->days = value; break;
-            case 'h': time->hours = value; break;
-            case 'm': time->minutes = value; break;
-            case 's': time->secondes = value; break;
+                case 'd': time->days = value; break;
+                case 'h': time->hours = value; break;
+                case 'm': time->minutes = value; break;
+                case 's': time->secondes = value; break;
             }
             value = 0;
         }
@@ -123,18 +125,15 @@ double to_days(const struct time* const timer)
     return to_hours(timer)/ (double)HOUR;
 }
 
-//int main()
-//{
-//    while(1){
-//        char stime[100];
-//        fgets(stime, 100, stdin );
-//        struct time* time = string_to_timer((char*)stime,strlen(stime));
-//        if(time){
-//            arrange(time);
-//            print(time);
-//            printf("%lf days %lf hours %lf minutes %lf seconds\n",to_days(time),to_hours(time),to_minuts(time),to_seconds(time));
-//            putchar('\n');
-//        }
-//    }
-//    return 0;
-//}
+void main_function()
+{
+    char* stime = readline("(time mode)>");
+    struct time* time = string_to_timer((char*)stime,strlen(stime));
+    if(time){
+        arrange(time);
+        print(time);
+        printf("%lf days %lf hours %lf minutes %lf seconds\n",to_days(time),to_hours(time),to_minuts(time),to_seconds(time));
+    }
+    if(time) free(time);
+    if(stime) free(stime);
+}

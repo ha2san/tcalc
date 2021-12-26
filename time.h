@@ -21,6 +21,8 @@ void adding(size_t* time, size_t* upper_time,size_t LIMIT);
 
 void arrange(struct time* timer);
 
+void main_function(void);
+
 void print(const struct time* timer);
 
 double conversion(const struct time* timer,enum time_unit unit);

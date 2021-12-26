@@ -183,7 +183,7 @@ int syntax_checker(List_tokens const* list_tokens)
         case NUMBER:
             if(before == RPARENTH)
                 return ERR_LEFT_BEFORE_NUMBER;
-            if(before == NUMBER) 
+            if(before == NUMBER)
                 return ERR_NUMBER_AFTER_NUMBER;
             break;
         case MODULO:
@@ -197,7 +197,7 @@ int syntax_checker(List_tokens const* list_tokens)
                 return ERR_SYNTAX;
             break;
         case LPARENTH: if (before == RPARENTH)
-                           return ERR_EMPTY_PARENTHESIS;
+                return ERR_EMPTY_PARENTHESIS;
         }
     }
 
