@@ -22,13 +22,6 @@ coverage: LDLIBS += -lgcov --coverage
 test: CFLAGS += -fsanitize=address 
 test: LDLIBS += -fsanitize=address 
 
-profile: CFLAGS += -g
-profile: tcalc
-	valgrind --tool=callgrind tcalc < profile_input
-	callgrind_annotate  callgrind.out.*
-	kcachegrind
-	rm callgrind.out*
-	make clean
 
 
 
@@ -60,6 +53,13 @@ tests: tokens.o calculation.o data_structure.o time.o input.o
 
 tests.o: tests.c tcalc.h data_structure.h 
 
+profile: CFLAGS += -g
+profile: tcalc
+	valgrind --tool=callgrind tcalc < profile_input
+	callgrind_annotate  callgrind.out.*
+	kcachegrind
+	rm callgrind.out*
+	make clean
 
 .PHONY : clean style test
 
