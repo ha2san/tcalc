@@ -3,12 +3,12 @@ PWD = ${shell pwd}
 
 CC=gcc
 
-CFLAGS = -std=c11 -Wall -pedantic -g -fno-omit-frame-pointer  -Ofast
+CFLAGS = -std=c11 -Ofast
 
 
-CFLAGS += -Wextra -Wfloat-equal -Wshadow                         \
+test: CFLAGS += -pedantic -Wall -Wextra -Wfloat-equal -Wshadow                         \
 -Wpointer-arith -Wbad-function-cast -Wcast-align -Wwrite-strings \
--Wconversion -Wunreachable-code 
+-Wconversion -Wunreachable-code -g -fno-omit-frame-pointer
 
 
 LDLIBS = -lm -lreadline 
@@ -19,8 +19,18 @@ test: LDLIBS  += -lcheck
 coverage: CFLAGS += -fprofile-arcs -ftest-coverage
 coverage: LDLIBS += -lgcov --coverage
 
-test: CFLAGS += -fsanitize=address
-test: LDLIBS += -fsanitize=address
+test: CFLAGS += -fsanitize=address 
+test: LDLIBS += -fsanitize=address 
+
+profile: CFLAGS += -g
+profile: tcalc
+	valgrind --tool=callgrind tcalc < profile_input
+	callgrind_annotate  callgrind.out.*
+	kcachegrind
+	rm callgrind.out*
+	make clean
+
+
 
 
 all:: $(TARGETS)
@@ -42,7 +52,7 @@ coverage: test
 	firefox out/index.html
 
 
-test: tests 
+test: tests tcalc
 	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PWD} ./tests < test_input
 
 tests: tokens.o calculation.o data_structure.o time.o input.o
