@@ -12,17 +12,18 @@ CFLAGS += -Wextra -Wfloat-equal -Wshadow                         \
 
 
 LDLIBS = -lm -lreadline 
-LDLIBS  += -lcheck -lm
+test: LDLIBS  += -lcheck
+
 
 #coverage
-CFLAGS += -fprofile-arcs -ftest-coverage
-LDLIBS += -lgcov --coverage
+coverage: CFLAGS += -fprofile-arcs -ftest-coverage
+coverage: LDLIBS += -lgcov --coverage
 
-CFLAGS += -fsanitize=address
-LDLIBS += -fsanitize=address
+test: CFLAGS += -fsanitize=address
+test: LDLIBS += -fsanitize=address
 
 
-all:: $(TARGETS) test
+all:: $(TARGETS)
 OBJS:= tcalc.o tokens.o calculation.o data_structure.o time.o input.o
 
 tcalc: $(OBJS)
