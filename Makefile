@@ -11,7 +11,8 @@ test: CFLAGS += -pedantic -Wall -Wextra -Wfloat-equal -Wshadow                  
 -Wconversion -Wunreachable-code -g -fno-omit-frame-pointer
 
 
-LDLIBS = -lm -lreadline 
+#LDLIBS = -lm -lreadline 
+LDLIBS = -lm -ledit 
 test: LDLIBS  += -lcheck
 
 
@@ -27,16 +28,20 @@ test: LDLIBS += -fsanitize=address
 
 
 all:: $(TARGETS)
-OBJS:= tcalc.o tokens.o calculation.o data_structure.o time.o input.o
+OBJS:= tcalc.o tokens.o calculation.o data_structure.o time.o input.o hashmap.o
 
 tcalc: $(OBJS)
 
+
 calculation.o: calculation.c tcalc.h data_structure.h
-data_structure.o: data_structure.h tcalc.h
-input.o: input.c tcalc.h
-tcalc.o: tcalc.h 
-time.o: time.h
+data_structure.o: data_structure.c data_structure.h tcalc.h
+hashmap.o: hashmap.c hashmap.h
+input.o: input.c tcalc.h time.h
+tcalc.o: tcalc.c tcalc.h
+tests.o: tests.c data_structure.h tcalc.h
+time.o: time.c time.h
 tokens.o: tokens.c tcalc.h
+
 
 coverage: test
 	gcov *.c
@@ -60,6 +65,10 @@ profile: tcalc
 	kcachegrind
 	rm callgrind.out*
 	make clean
+
+valgrind: CFLAGS += -g
+valgrind: tcalc
+	valgrind   tcalc < profile_input
 
 .PHONY : clean style test
 
