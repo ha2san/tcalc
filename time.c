@@ -16,13 +16,23 @@ int check_syntax(const char* string, size_t length)
     size_t j = 0;
     int space = 0;
     int digit = 0;
+    int point = 1;
+    int afterPoint = 10;
 
     for (size_t i = 0; i < length; ++i) {
+        if(!isdigit(string[i])) point = 1;
         if(isdigit(string[i])) {
             space = 0;
             digit = 0;
-        } else if (isalpha(string[i])) {
+            afterPoint = 0;
+            
+        }else if(string[i] == '.'){
+            if(!point) return SYNTAX_ERROR;
+            afterPoint = 1;
+            point = 0;
+        }else if (isalpha(string[i])) {
             if(i==0)return SYNTAX_ERROR;
+            if(afterPoint) return SYNTAX_ERROR;
             if(digit) return SYNTAX_ERROR;
             while(string[i] != array[j]) {
                 j++;
@@ -49,13 +59,23 @@ struct time* string_to_timer(char* string, size_t length)
     }
 
     struct time* time = calloc(1,sizeof(struct time));
-    size_t value = 0;
+    double value = 0;
+    int afterPoint = 0;
+    int afterPointDecimal = 10;
     for (size_t i = 0; i < length; ++i) {
         if(isdigit(string[i])) {
-            value = value * 10 + ((size_t) string[i] - '0');
+            if(!afterPoint) value = value * 10 + (string[i] - '0');
+            else {
+                double add = ((double) (string[i] - '0'))/ afterPointDecimal;
+                value += add;
+                afterPointDecimal *= 10;
+            }
+        }else if (string[i] == '.'){
+            afterPoint=1;
         } else if(isspace(string[i])) {
 
         } else {
+            afterPoint = 0;
             switch (string[i]) {
                 case 'd': time->days = value; break;
                 case 'h': time->hours = value; break;
@@ -68,28 +88,32 @@ struct time* string_to_timer(char* string, size_t length)
     return time;
 }
 
-void adding(size_t* time, size_t* upper_time,size_t LIMIT)
+void adding(double* time, double* upper_time,double* down_limit,double LIMIT)
 {
-    if(*time >= LIMIT) {
-        size_t new_value = *time % LIMIT;
-        size_t add_upper_value = *time / LIMIT;
-        *time = new_value;
-        *upper_time += add_upper_value;
+    double decimal = *time - (int)*time;
+    if(down_limit && decimal > 0){
+        *down_limit += decimal * 60;
+        *time -= decimal;
+    }
+    while(*time >= LIMIT)
+    {
+        *time -= LIMIT;
+        *upper_time += 1;
     }
 }
 
 
 void arrange(struct time* timer)
 {
-    adding(&timer->secondes,&timer->minutes,SECOND);
-    adding(&timer->minutes,&timer->hours,MINUTE);
-    adding(&timer->hours,&timer->days,HOUR);
+    adding(&timer->secondes,&timer->minutes,NULL,SECOND);
+    adding(&timer->minutes,&timer->hours,&timer->secondes,MINUTE);
+    adding(&timer->hours,&timer->days,&timer->minutes,HOUR);
 }
 
-void print_helper(const char* str,const size_t* value)
+void print_helper(const char* str,const double* value)
 {
     if(*value != 0) {
-        printf("%zu %s",*value,str);
+        printf("%g %s",*value,str);
         if(*value > 1)
             printf("s ");
         else putchar(' ');

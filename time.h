@@ -3,10 +3,10 @@
 #include <stdlib.h>
 
 struct time {
-    size_t secondes;
-    size_t minutes;
-    size_t hours;
-    size_t days;
+    double secondes;
+    double minutes;
+    double hours;
+    double days;
 };
 
 #define SECOND 60
@@ -17,7 +17,7 @@ enum time_unit {day,hour,minut,second};
 
 struct time* string_to_timer(char*,size_t);
 
-void adding(size_t* time, size_t* upper_time,size_t LIMIT);
+void adding(double* time, double* upper_time,double* down_limit,double LIMIT);
 
 void arrange(struct time* timer);
 
