@@ -98,7 +98,6 @@ void adding(double* time, double* upper_time,double* down_time,double limit,doub
 
     while(upper_time && *time >= limit)
     {
-        printf("lkajsd %p\n",(void *)upper_time);
         *time -= limit;
         *upper_time += 1;
     }
