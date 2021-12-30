@@ -88,16 +88,18 @@ struct time* string_to_timer(char* string, size_t length)
     return time;
 }
 
-void adding(double* time, double* upper_time,double* down_limit,double LIMIT)
+void adding(double* time, double* upper_time,double* down_time,double limit,double down_limit)
 {
     double decimal = *time - (int)*time;
-    if(down_limit && decimal > 0){
-        *down_limit += decimal * 60;
+    if(down_time && decimal > 0){
+        *down_time += decimal * down_limit;
         *time -= decimal;
     }
-    while(*time >= LIMIT)
+
+    while(upper_time && *time >= limit)
     {
-        *time -= LIMIT;
+        printf("lkajsd %p\n",(void *)upper_time);
+        *time -= limit;
         *upper_time += 1;
     }
 }
@@ -105,9 +107,10 @@ void adding(double* time, double* upper_time,double* down_limit,double LIMIT)
 
 void arrange(struct time* timer)
 {
-    adding(&timer->secondes,&timer->minutes,NULL,SECOND);
-    adding(&timer->minutes,&timer->hours,&timer->secondes,MINUTE);
-    adding(&timer->hours,&timer->days,&timer->minutes,HOUR);
+    adding(&timer->secondes,&timer->minutes,NULL,SECOND,0);
+    adding(&timer->minutes,&timer->hours,&timer->secondes,MINUTE,SECOND);
+    adding(&timer->hours,&timer->days,&timer->minutes,HOUR,MINUTE);
+    adding(&timer->days,NULL,&timer->hours,-1,HOUR);
 }
 
 void print_helper(const char* str,const double* value)
@@ -154,6 +157,7 @@ void main_function()
     char* stime = readline("(time mode)>");
     struct time* time = string_to_timer((char*)stime,strlen(stime));
     if(time){
+        arrange(time);
         arrange(time);
         print(time);
         printf("%lf days %lf hours %lf minutes %lf seconds\n",to_days(time),to_hours(time),to_minuts(time),to_seconds(time));

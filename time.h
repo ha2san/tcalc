@@ -17,7 +17,7 @@ enum time_unit {day,hour,minut,second};
 
 struct time* string_to_timer(char*,size_t);
 
-void adding(double* time, double* upper_time,double* down_limit,double LIMIT);
+void adding(double* time, double* upper_time,double* down_limit,double LIMIT,double);
 
 void arrange(struct time* timer);
 
