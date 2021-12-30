@@ -10,8 +10,8 @@
 #define PREC 0.001
 #define calcul(x,y) ck_assert_double_eq_tol(main_calcul((char*)(x),(&ret),(map)),(y),(PREC))
 
-bool t_map_free(void *item, void *udata) {
-    struct mapping *user = item;
+bool t_map_free(const void *item, void *udata) {
+    const struct mapping *user = item;
     free(user->variable_name);
     return true;
 }
@@ -91,14 +91,13 @@ START_TEST(variable_test)
 
     calcul("$salut=1+1",2);
     calcul("$police=117",117);
-    double temp = main_calcul((char*)"1+$police",&ret,map);
-    ck_assert_int_eq((int)temp,118);
+    calcul("$police+1",118);
+    calcul("1+$police+1",119);
+    calcul("$police=1",1);
+    calcul("$police=$police+1",2);
 
-    temp = main_calcul((char*)"1+$salut",&ret,map);
-    ck_assert_int_eq((int)temp,3);
 
-    temp = main_calcul((char*)"1+$bonjour",&ret,map);
-    ck_assert_int_eq(ret,EXIT_FAILURE);
+
 
     hashmap_scan(map, t_map_free, NULL);
 

@@ -40,6 +40,7 @@ char* get_rid_variable(char* input)
 double main_calcul(char* input,int* error_exit,struct hashmap* map)
 {
     char* input_clean = minus_clean(input,1);
+    char* real_input = input_clean;
     char* variable_name = NULL;
     if(map && is_set_variable(input_clean)){
         variable_name = get_variable_name(input_clean);
@@ -47,12 +48,8 @@ double main_calcul(char* input,int* error_exit,struct hashmap* map)
     }
     List_tokens* tok = get_tokens(input_clean,map);
 
-    if(variable_name)
-    {
-        while(*input_clean != '$') input_clean--;
-    }
 
-    free(input_clean);
+    free(real_input);
 
 
     if(tok == NULL)  return ERROR;
@@ -69,7 +66,10 @@ double main_calcul(char* input,int* error_exit,struct hashmap* map)
             struct mapping* in_map = calloc(1,sizeof(struct mapping));
             in_map->variable_name = variable_name;
             in_map->value = ret;
-            hashmap_set(map,in_map);
+            struct mapping* temp = hashmap_set(map,in_map);
+            if(temp) {
+                free(temp->variable_name);
+            }
             free(in_map);
         }
     }

@@ -153,13 +153,13 @@ double to_days(const struct time* const timer)
 
 void main_function()
 {
-    char* stime = readline("(time mode)>");
+    char* stime = readline("(time mode)> ");
     struct time* time = string_to_timer((char*)stime,strlen(stime));
     if(time){
         arrange(time);
         arrange(time);
         print(time);
-        printf("%lf days %lf hours %lf minutes %lf seconds\n",to_days(time),to_hours(time),to_minuts(time),to_seconds(time));
+        printf("%g days %g hours %g minutes %g seconds\n",to_days(time),to_hours(time),to_minuts(time),to_seconds(time));
     }
     if(time) free(time);
     if(stime) free(stime);

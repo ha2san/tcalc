@@ -13,6 +13,9 @@ test: CFLAGS += -pedantic -Wall -Wextra -Wfloat-equal -Wshadow                  
 
 debug: tcalc
 debug: CFLAGS += -g
+debug: CFLAGS += -pedantic -Wall -Wextra -Wfloat-equal -Wshadow                         \
+-Wpointer-arith -Wbad-function-cast -Wcast-align -Wwrite-strings \
+-Wconversion -Wunreachable-code -g -fno-omit-frame-pointer
 
 #LDLIBS = -lm -lreadline 
 LDLIBS = -lm -ledit 

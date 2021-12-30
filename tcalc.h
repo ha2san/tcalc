@@ -46,6 +46,8 @@ char* sanitize_input(char* input, size_t length, enum INPUT where);
 
 double run_argument(const char*);
 
+bool show_map(const void *item, void *udata);
+
 int run_stdin(void);
 
 /**

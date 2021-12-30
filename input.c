@@ -71,6 +71,13 @@ bool map_free(const void *item, void *udata) {
     return true;
 }
 
+bool show_map(const void *item, void *udata) {
+    const struct mapping *user = item;
+    printf("\t%s => %g\n",user->variable_name,user->value);
+
+    return true;
+}
+
 int run_stdin(void)
 {
     printf("write \"clear\" to clear the screen\n"
@@ -93,6 +100,7 @@ int run_stdin(void)
             } else if(!strcmp(input,"clear")) system("clear");
             else if(!strcmp(input,"time")) main_function();
             else if(!strcmp(input,"help")) help();
+            else if(!strcmp(input,"variable")) hashmap_scan(map,show_map,NULL);
             else {
                 int error;
                 double calcul = main_calcul(input,&error,map);

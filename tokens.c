@@ -112,12 +112,6 @@ size_t get_variable_end(size_t from,char* input,char* v_name)
 }
 
 
-bool print_map(const void *item, void *udata) {
-    const struct mapping *user = item;
-    printf("\t%s => %g\n",user->variable_name,user->value);
-
-    return true;
-}
 
 size_t getUntil(size_t index, size_t* from,char* input,Tokens* t, struct hashmap* map)
 {
@@ -133,7 +127,7 @@ size_t getUntil(size_t index, size_t* from,char* input,Tokens* t, struct hashmap
             if(m_value == NULL) {
                 printf("value of %s unknown\n",v_name);
                 printf("List of variables:\n");
-                hashmap_scan(map,print_map,NULL);
+                hashmap_scan(map,show_map,NULL);
                 putchar('\n');
                 t[index].type = UNKNOWN;
                 free(t[index].value);
