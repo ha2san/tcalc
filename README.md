@@ -13,9 +13,10 @@ $ tcalc
 ```
 $ tcalc
 > time
-(time mode)> 75m
-1 hour 15 minutes
-0.052083 days 1.250000 hours 75.000000 minutes 4500.000000 seconds
+(time mode)> 25h67m24s
+1 day 2 hours 7 minutes 24 seconds
+1.08847 days 26.1233 hours 1567.4 minutes 94044 seconds
+>
 ```
 
 ```
