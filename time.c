@@ -153,7 +153,7 @@ double to_days(const struct time* const timer)
 
 void main_function()
 {
-    char* stime = readline("(time mode)> ");
+    char* stime = readline(">(time mode) ");
     struct time* time = string_to_timer((char*)stime,strlen(stime));
     if(time){
         arrange(time);

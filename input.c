@@ -100,7 +100,7 @@ int run_stdin(void)
             } else if(!strcmp(input,"clear")) system("clear");
             else if(!strcmp(input,"time")) main_function();
             else if(!strcmp(input,"help")) help();
-            else if(!strcmp(input,"variable")) hashmap_scan(map,show_map,NULL);
+            else if(!strcmp(input,"variables")) hashmap_scan(map,show_map,NULL);
             else {
                 int error;
                 double calcul = main_calcul(input,&error,map);
