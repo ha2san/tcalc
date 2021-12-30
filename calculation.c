@@ -2,11 +2,58 @@
 #include "data_structure.h"
 #include <math.h>
 
-double main_calcul(char* input,int* error_exit)
+int is_set_variable(char* input)
+{
+    if(!input) return 0;
+    if(*input == '$'){
+        while(*input != '=' && *(input) != 0) input++;
+        return *input == '=';
+    }else return 0;
+}
+
+char* get_variable_name(char* input)
+{
+    char variable_name[100];
+    input++;
+    size_t i = 0;
+
+    while(*input != '=')
+    {
+        variable_name[i] = *input;
+        i++;
+        input++;
+    }
+
+    char* variable = calloc(i+2,sizeof(char));
+    strncpy(variable,variable_name,i);
+    return variable;
+}
+
+char* get_rid_variable(char* input)
+{
+    while(*input != '=') input++;
+    input++;
+
+    return input;
+}
+
+double main_calcul(char* input,int* error_exit,struct hashmap* map)
 {
     char* input_clean = minus_clean(input,1);
-    List_tokens* tok = get_tokens(input_clean);
+    char* variable_name = NULL;
+    if(map && is_set_variable(input_clean)){
+        variable_name = get_variable_name(input_clean);
+        input_clean = get_rid_variable(input_clean);
+    }
+    List_tokens* tok = get_tokens(input_clean,map);
+
+    if(variable_name)
+    {
+        while(*input_clean != '$') input_clean--;
+    }
+
     free(input_clean);
+
 
     if(tok == NULL)  return ERROR;
     int error = syntax_checker(tok);
@@ -18,6 +65,13 @@ double main_calcul(char* input,int* error_exit)
     } else {
         *error_exit = EXIT_SUCCESS;
         ret = do_calculation(tok);
+        if(map && variable_name){
+            struct mapping* in_map = calloc(1,sizeof(struct mapping));
+            in_map->variable_name = variable_name;
+            in_map->value = ret;
+            hashmap_set(map,in_map);
+            free(in_map);
+        }
     }
 
     free_list_tokens(tok);

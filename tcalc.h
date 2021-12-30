@@ -3,8 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "hashmap.h"
 
 
 #define ERROR -1
@@ -19,7 +18,7 @@
 #define ERR_BAD_END -8
 
 
-enum TYPE {NUMBER,MODULO,PLUS,MINUS,TIME,DIVIDE,POWER,LPARENTH,RPARENTH, UNKNOWN};
+enum TYPE {NUMBER,MODULO,PLUS,MINUS,TIME,DIVIDE,POWER,LPARENTH,RPARENTH,VARIABLE, UNKNOWN};
 
 enum INPUT {STDIN,ARGV};
 
@@ -41,7 +40,7 @@ struct list_tokens {
     int error;
 };
 
-double main_calcul(char* input, int* error);
+double main_calcul(char* input, int* error,struct hashmap*);
 
 char* sanitize_input(char* input, size_t length, enum INPUT where);
 
@@ -72,7 +71,7 @@ void print_list_tokens(List_tokens const* list);
  *
  * @return
  */
-size_t getUntil(size_t index, size_t* from,char* input,Tokens* t);
+size_t getUntil(size_t index, size_t* from,char* input,Tokens* t,struct hashmap*);
 
 /**
  * @brief
@@ -100,7 +99,7 @@ int isNumber(char c);
  *
  * @return
  */
-List_tokens* get_tokens(char* input);
+List_tokens* get_tokens(char* input,struct hashmap*);
 
 
 /**

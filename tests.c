@@ -8,10 +8,17 @@
 #include "tcalc.h"
 
 #define PREC 0.001
-#define calcul(x,y) ck_assert_double_eq_tol(main_calcul((char*)(x),(&ret)),(y),(PREC))
+#define calcul(x,y) ck_assert_double_eq_tol(main_calcul((char*)(x),(&ret),(map)),(y),(PREC))
+
+bool t_map_free(void *item, void *udata) {
+    struct mapping *user = item;
+    free(user->variable_name);
+    return true;
+}
 
 START_TEST(example_test)
 {
+    struct hashmap* map = new_map();
     int ret;
     calcul("--1",1);
     calcul("-(-1)",1);
@@ -48,30 +55,59 @@ START_TEST(example_test)
 
     value = run_stdin();
     ck_assert_int_eq((int)value,EXIT_SUCCESS);
+
+    hashmap_free(map);
 }
 END_TEST
 
 START_TEST(error_test)
 {
     int ret;
+    struct hashmap* map = new_map();
 
-    main_calcul((char*)"+",&ret);
+    main_calcul((char*)"+",&ret,map);
     ck_assert_int_eq(ret,EXIT_FAILURE);
-    main_calcul((char*)"((1+1)",&ret);
+    main_calcul((char*)"((1+1)",&ret,map);
     ck_assert_int_eq(ret,EXIT_FAILURE);
-    main_calcul((char*)"(3)1+2",&ret);
+    main_calcul((char*)"(3)1+2",&ret,map);
     ck_assert_int_eq(ret,EXIT_FAILURE);
-    main_calcul((char*)"((3))",&ret);
+    main_calcul((char*)"((3))",&ret,map);
     ck_assert_int_eq(ret,EXIT_SUCCESS);
-    main_calcul((char*)"%1+1",&ret);
+    main_calcul((char*)"%1+1",&ret,map);
     ck_assert_int_eq(ret,EXIT_FAILURE);
-    main_calcul((char*)"1&1",&ret);
+    main_calcul((char*)"1&1",&ret,map);
     ck_assert_int_eq(ret,EXIT_FAILURE);
-    main_calcul((char*)"()+1",&ret);
+    main_calcul((char*)"()+1",&ret,map);
     ck_assert_int_eq(ret,EXIT_FAILURE);
+
+    hashmap_free(map);
 }
 END_TEST
 
+START_TEST(variable_test)
+{
+    int ret;
+    struct hashmap* map = new_map();
+
+    calcul("$salut=1+1",2);
+    calcul("$police=117",117);
+    double temp = main_calcul((char*)"1+$police",&ret,map);
+    ck_assert_int_eq((int)temp,118);
+
+    temp = main_calcul((char*)"1+$salut",&ret,map);
+    ck_assert_int_eq((int)temp,3);
+
+    temp = main_calcul((char*)"1+$bonjour",&ret,map);
+    ck_assert_int_eq(ret,EXIT_FAILURE);
+
+    hashmap_scan(map, t_map_free, NULL);
+
+    hashmap_free(map);
+
+
+
+}
+END_TEST
 int main()
 {
     Suite* s = suite_create("tests");
@@ -81,6 +117,7 @@ int main()
     /* Add your own tests here */
     tcase_add_test(tc1, example_test);
     tcase_add_test(tc1, error_test);
+    tcase_add_test(tc1, variable_test);
 
     SRunner *sr = srunner_create(s);
     srunner_run_all(sr, CK_VERBOSE);

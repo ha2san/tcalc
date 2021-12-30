@@ -5,11 +5,14 @@ CC=gcc
 
 CFLAGS = -std=c11 -Ofast
 
+all:: $(TARGETS)
 
 test: CFLAGS += -pedantic -Wall -Wextra -Wfloat-equal -Wshadow                         \
 -Wpointer-arith -Wbad-function-cast -Wcast-align -Wwrite-strings \
 -Wconversion -Wunreachable-code -g -fno-omit-frame-pointer
 
+debug: tcalc
+debug: CFLAGS += -g
 
 #LDLIBS = -lm -lreadline 
 LDLIBS = -lm -ledit 
@@ -27,21 +30,20 @@ test: LDLIBS += -fsanitize=address
 
 
 
-all:: $(TARGETS)
 OBJS:= tcalc.o tokens.o calculation.o data_structure.o time.o input.o hashmap.o
 
 tcalc: $(OBJS)
 
 
-calculation.o: calculation.c tcalc.h data_structure.h
-data_structure.o: data_structure.c data_structure.h tcalc.h
-hashmap.o: hashmap.c hashmap.h
-input.o: input.c tcalc.h time.h
-tcalc.o: tcalc.c tcalc.h
-tests.o: tests.c data_structure.h tcalc.h
-time.o: time.c time.h
-tokens.o: tokens.c tcalc.h
 
+calculation.o: calculation.c tcalc.h hashmap.h data_structure.h
+data_structure.o: data_structure.c data_structure.h tcalc.h hashmap.h
+hashmap.o: hashmap.c hashmap.h
+input.o: input.c tcalc.h hashmap.h time.h
+tcalc.o: tcalc.c tcalc.h hashmap.h
+tests.o: tests.c data_structure.h tcalc.h hashmap.h
+time.o: time.c time.h
+tokens.o: tokens.c tcalc.h hashmap.h
 
 coverage: test
 	gcov *.c
@@ -53,7 +55,7 @@ coverage: test
 test: tests tcalc
 	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PWD} ./tests < test_input
 
-tests: tokens.o calculation.o data_structure.o time.o input.o
+tests: tokens.o calculation.o data_structure.o time.o input.o hashmap.o
 
 
 tests.o: tests.c tcalc.h data_structure.h 

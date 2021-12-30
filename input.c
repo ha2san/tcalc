@@ -1,5 +1,7 @@
 #include "tcalc.h"
 #include "time.h"
+#include <editline/readline.h>
+
 
 char* sanitize_input(char* input,size_t length,enum INPUT where)
 {
@@ -50,7 +52,7 @@ double run_argument(const char* argv)
     if(!input) return EXIT_FAILURE;
 
     int error;
-    double ret = main_calcul(input,&error);
+    double ret = main_calcul(input,&error,NULL);
     if(error == EXIT_FAILURE) {
         if(input) free(input);
         return error;
@@ -63,11 +65,18 @@ double run_argument(const char* argv)
 }
 
 
+bool map_free(const void *item, void *udata) {
+    const struct mapping *user = item;
+    free(user->variable_name);
+    return true;
+}
+
 int run_stdin(void)
 {
     printf("write \"clear\" to clear the screen\n"
             "write \"q\" or \"exit\" to exit\n");
     using_history();
+    struct hashmap* map = new_map();
     while(1) {
         char* input = readline("> ");
         if(!input)
@@ -75,6 +84,7 @@ int run_stdin(void)
         size_t length = strlen(input);
         input = sanitize_input(input,length,STDIN);
         add_history(input);
+
 
         if (input && length > 0) {
             if(!strcmp(input,"q") || !strcmp(input,"exit")) {
@@ -85,13 +95,19 @@ int run_stdin(void)
             else if(!strcmp(input,"help")) help();
             else {
                 int error;
-                double calcul = main_calcul(input,&error);
+                double calcul = main_calcul(input,&error,map);
                 if(error == EXIT_SUCCESS) printf("%g\n",calcul);
             }
         }
 
         if(input)free(input);
+        input = NULL;
     }
+
+    clear_history ();
+    hashmap_scan(map, map_free, NULL);
+    hashmap_free(map);
+
     return EXIT_SUCCESS;
 }
 
