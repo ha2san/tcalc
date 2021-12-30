@@ -27,7 +27,7 @@ $ tcalc
 1058
 > $hello=12
 12
-> variable
+> variables
         hello => 12
         hi => 1058
 ```
