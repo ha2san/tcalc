@@ -132,20 +132,28 @@ void operand(Stack* s1, Stack* s2, Tokens tok)
 
 void tokens_to_postfix(List_tokens* list_token)
 {
-    Stack* output = stack_init();
-    Stack* memory = stack_init();
+    //Stack* output = stack_init((size_t)list_token->size);
+    //Stack* memory = stack_init((size_t)list_token->size);
+    Stack output;
+    Stack memory;
+    Tokens output_tokens[list_token->size];
+    Tokens memory_tokens[list_token->size];
+    output.tokens_list = output_tokens;
+    memory.tokens_list = memory_tokens;
+    output.size = 0;
+    memory.size = 0;
     int new_size = 0;
     for (int i = 0; i < list_token->size; ++i) {
         switch (list_token->elems[i].type) {
-        case NUMBER: push(output,list_token->elems[i]); new_size++; break;
-        case LPARENTH: push(memory,list_token->elems[i]); break;
-        case RPARENTH: stack_left_parenth(output,memory); free(list_token->elems[i].value); break;
-        default: operand(output,memory,list_token->elems[i]); new_size++;
+        case NUMBER: push(&output,list_token->elems[i]); new_size++; break;
+        case LPARENTH: push(&memory,list_token->elems[i]); break;
+        case RPARENTH: stack_left_parenth(&output,&memory); free(list_token->elems[i].value); break;
+        default: operand(&output,&memory,list_token->elems[i]); new_size++;
         }
     }
 
-    while(!isEmpty(memory)) {
-        push(output,pop(memory));
+    while(!isEmpty(&memory)) {
+        push(&output,pop(&memory));
     }
 
 
@@ -155,18 +163,18 @@ void tokens_to_postfix(List_tokens* list_token)
 
     if(list_token->elems == NULL) {
         fprintf(stderr,"MEMORY ERROR");
-        stack_free(output);
-        stack_free(memory);
+        //stack_free(output);
+        //stack_free(memory);
         return;
     }
 
 
     for (int i = list_token->size-1; i >= 0; --i) {
-        list_token->elems[i] = pop(output);
+        list_token->elems[i] = pop(&output);
     }
 
-    stack_free(output);
-    stack_free(memory);
+    //stack_free(output);
+    //stack_free(memory);
 }
 double modulo_calcul(double x, double y)
 {
@@ -191,7 +199,8 @@ double calcul(double x, double y, TYPE t)
 
 double postfix_calculation(List_tokens* list_token)
 {
-    double s[MAX] =  {0};
+    double s[list_token->size];
+    memset( s, 0,(size_t)(list_token->size)*sizeof(double) );
     size_t index = 0;
     for(int i = 0; i< list_token->size; i++) {
         if(list_token->elems[i].type == NUMBER) {

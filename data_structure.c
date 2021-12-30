@@ -1,14 +1,17 @@
 #include "data_structure.h"
 
-Stack* stack_init(void)
+Stack* stack_init(size_t size)
 {
     Stack* stack = calloc(1,sizeof(Stack));
+    stack->tokens_list = calloc(size,sizeof(Tokens));
     return stack;
 }
 
 void stack_free(Stack* s)
 {
-    if(s != NULL) free(s);
+    if(s->tokens_list) free(s->tokens_list);
+    if(s) free(s);
+    s = NULL;
 }
 
 

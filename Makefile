@@ -23,7 +23,7 @@ test: LDLIBS  += -lcheck
 
 
 #coverage
-coverage: CFLAGS += -fprofile-arcs -ftest-coverage
+coverage: CFLAGS += -fprofile-arcs -ftest-coverage -g
 coverage: LDLIBS += -lgcov --coverage
 
 test: CFLAGS += -fsanitize=address 
@@ -65,7 +65,7 @@ tests.o: tests.c tcalc.h data_structure.h
 
 profile: CFLAGS += -g
 profile: tcalc
-	valgrind --tool=callgrind tcalc < profile_input
+	valgrind --tool=callgrind ./tcalc < profile_input
 	callgrind_annotate  callgrind.out.*
 	kcachegrind
 	rm callgrind.out*

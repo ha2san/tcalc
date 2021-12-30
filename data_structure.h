@@ -1,7 +1,8 @@
 #include "tcalc.h"
 
 struct Stack {
-    Tokens tokens_list[MAX];
+    //Tokens tokens_list[MAX];
+    Tokens* tokens_list;
     size_t size;
 };
 
@@ -12,7 +13,7 @@ typedef struct Stack Stack;
  *
  * @return
  */
-Stack* stack_init(void);
+Stack* stack_init(size_t);
 
 /**
  * @brief
