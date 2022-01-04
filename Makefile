@@ -15,6 +15,7 @@ cflags_d = -pedantic -Wall -Wextra -Wfloat-equal -Wshadow   \
 -Wconversion -Wunreachable-code -g -fno-omit-frame-pointer
 
 all:: $(TARGETS)
+	mkdir -p bin/
 	mv $(TARGETS) $(BINARY) 
 
 src/tcalc: $(OBJS)
