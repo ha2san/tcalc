@@ -1,4 +1,4 @@
 #!/bin/sh
 
-apt-get install libedit-dev
+sudo apt-get install libedit-dev
 
