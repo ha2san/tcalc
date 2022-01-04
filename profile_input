@@ -23,4 +23,9 @@ time
 1*2+3/2
 1*2%4/2
 3.4%6
+$ahmed=2^8*2
+$habib=$ahmed^2+23/3
+variables
+$habib=12
+$ahmed=24^3
 exit

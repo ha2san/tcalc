@@ -4,8 +4,8 @@
 #include <regex.h>
 #include <ctype.h>
 #include <string.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include <editline/readline.h>
+//#include <readline/history.h>
 
 #define SYNTAX_ERROR 1
 

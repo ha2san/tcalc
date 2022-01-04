@@ -18,7 +18,7 @@ debug: CFLAGS += -pedantic -Wall -Wextra -Wfloat-equal -Wshadow                 
 -Wconversion -Wunreachable-code -g -fno-omit-frame-pointer
 
 #LDLIBS = -lm -lreadline 
-LDLIBS = -lm -ledit 
+LDLIBS = -lm -ledit
 test: LDLIBS  += -lcheck
 
 
