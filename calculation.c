@@ -1,6 +1,13 @@
+#include "calculation.h"
+#include "tokens.h"
 #include "tcalc.h"
 #include "data_structure.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include <math.h>
+
+#define ERROR -1
 
 int is_set_variable(char* input)
 {

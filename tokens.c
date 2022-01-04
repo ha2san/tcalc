@@ -1,4 +1,8 @@
-#include "tcalc.h"
+#include "tokens.h"
+#include "input.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 void print_token(Tokens t)
 {

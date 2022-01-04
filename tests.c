@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "data_structure.h"
-#include "tcalc.h"
+#include "calculation.h"
+#include "input.h"
 
 #define PREC 0.001
 #define calcul(x,y) ck_assert_double_eq_tol(main_calcul((char*)(x),(&ret),(map)),(y),(PREC))

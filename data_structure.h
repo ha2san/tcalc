@@ -1,4 +1,6 @@
-#include "tcalc.h"
+#include "tokens.h"
+
+#define MAX 2024
 
 struct Stack {
     //Tokens tokens_list[MAX];

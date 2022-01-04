@@ -1,6 +1,8 @@
-#include "tcalc.h"
-#include "time.h"
+#include "input.h"
+#include "calculation.h"
+#include <string.h>
 #include <editline/readline.h>
+#include "time.h"
 
 
 char* sanitize_input(char* input,size_t length,enum INPUT where)
@@ -25,14 +27,14 @@ char* sanitize_input(char* input,size_t length,enum INPUT where)
 void help(void)
 {
     printf("TCALC: terminal calculator\n"
-           "usage:\n"
-           "        $ tcalc \"3*(2+1)\"\n"
-           "        9\n"
-           "        or\n"
-           "        $ tcalc\n"
-           "        > 1.5*9.8+3.2\n"
-           "        17.9\n\n"
-           "operands: + - * ^\n");
+            "usage:\n"
+            "        $ tcalc \"3*(2+1)\"\n"
+            "        9\n"
+            "        or\n"
+            "        $ tcalc\n"
+            "        > 1.5*9.8+3.2\n"
+            "        17.9\n\n"
+            "operands: + - * ^\n");
 
 }
 

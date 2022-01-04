@@ -1,4 +1,6 @@
 #include "data_structure.h"
+#include "stdlib.h"
+#include "stdio.h"
 
 Stack* stack_init(size_t size)
 {

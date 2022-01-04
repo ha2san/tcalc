@@ -38,15 +38,17 @@ OBJS:= tcalc.o tokens.o calculation.o data_structure.o time.o input.o hashmap.o
 tcalc: $(OBJS)
 
 
-
-calculation.o: calculation.c tcalc.h hashmap.h data_structure.h
-data_structure.o: data_structure.c data_structure.h tcalc.h hashmap.h
+calculation.o: calculation.c calculation.h hashmap.h tokens.h tcalc.h \
+ data_structure.h
+data_structure.o: data_structure.c data_structure.h tokens.h hashmap.h
 hashmap.o: hashmap.c hashmap.h
-input.o: input.c tcalc.h hashmap.h time.h
-tcalc.o: tcalc.c tcalc.h hashmap.h
-tests.o: tests.c data_structure.h tcalc.h hashmap.h
+input.o: input.c input.h calculation.h hashmap.h tokens.h time.h
+tcalc.o: tcalc.c input.h
+tests.o: tests.c data_structure.h tokens.h hashmap.h calculation.h \
+ input.h
 time.o: time.c time.h
-tokens.o: tokens.c tcalc.h hashmap.h
+tokens.o: tokens.c tokens.h hashmap.h input.h
+
 
 coverage: test
 	gcov *.c
