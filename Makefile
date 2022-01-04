@@ -1,4 +1,4 @@
-TARGETS:= tcalc
+TARGETS:= src/tcalc
 PWD = ${shell pwd}
 
 CC=gcc
@@ -6,16 +6,17 @@ CC=gcc
 CFLAGS = -std=c11 -Ofast
 
 all:: $(TARGETS)
+	mv src/tcalc bin/tcalc
 
-test: CFLAGS += -pedantic -Wall -Wextra -Wfloat-equal -Wshadow                         \
+cflags_d = -pedantic -Wall -Wextra -Wfloat-equal -Wshadow   \
 -Wpointer-arith -Wbad-function-cast -Wcast-align -Wwrite-strings \
 -Wconversion -Wunreachable-code -g -fno-omit-frame-pointer
 
-debug: tcalc
+test: CFLAGS += $(cflags_d)
+
+debug: all 
 debug: CFLAGS += -g
-debug: CFLAGS += -pedantic -Wall -Wextra -Wfloat-equal -Wshadow                         \
--Wpointer-arith -Wbad-function-cast -Wcast-align -Wwrite-strings \
--Wconversion -Wunreachable-code -g -fno-omit-frame-pointer
+debug: CFLAGS += $(cflags_d)
 
 #LDLIBS = -lm -lreadline 
 LDLIBS = -lm -ledit
@@ -29,53 +30,51 @@ coverage: LDLIBS += -lgcov --coverage
 test: CFLAGS += -fsanitize=address 
 test: LDLIBS += -fsanitize=address 
 
+OBJS:= src/tcalc.o src/tokens.o src/calculation.o src/data_structure.o src/time.o \
+ src/input.o src/hashmap.o
+
+src/tcalc: $(OBJS)
 
 
-
-
-OBJS:= tcalc.o tokens.o calculation.o data_structure.o time.o input.o hashmap.o
-
-tcalc: $(OBJS)
-
-
-calculation.o: calculation.c calculation.h hashmap.h tokens.h  \
- data_structure.h
-data_structure.o: data_structure.c data_structure.h tokens.h hashmap.h
-hashmap.o: hashmap.c hashmap.h
-input.o: input.c input.h calculation.h hashmap.h tokens.h time.h
-tcalc.o: tcalc.c input.h
-tests.o: tests.c data_structure.h tokens.h hashmap.h calculation.h \
- input.h
-time.o: time.c time.h
-tokens.o: tokens.c tokens.h hashmap.h input.h
+src/calculation.o: src/calculation.c src/calculation.h src/hashmap.h \
+ src/tokens.h src/data_structure.h
+src/data_structure.o: src/data_structure.c src/data_structure.h src/tokens.h \
+ src/hashmap.h
+src/hashmap.o: src/hashmap.c src/hashmap.h
+src/input.o: src/input.c src/input.h src/calculation.h src/hashmap.h \
+ src/tokens.h src/time.h
+src/tcalc.o: src/tcalc.c src/input.h
+src/time.o: src/time.c src/time.h
+src/tokens.o: src/tokens.c src/tokens.h src/hashmap.h src/input.h
+test/tests.o: test/tests.c src/data_structure.h src/tokens.h \
+ src/hashmap.h src/calculation.h src/input.h
 
 
 coverage: test
-	gcov *.c
+	gcov src/*.c
 	lcov --capture --directory . --output-file coverage.info
 	genhtml coverage.info --output-directory out
 	firefox out/index.html
 
 
-test: tests tcalc
-	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PWD} ./tests < test_input
+test: test/tests src/tcalc
+	LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PWD} ./test/tests < test/test_input
 
-tests: tokens.o calculation.o data_structure.o time.o input.o hashmap.o
+test/tests: src/tokens.o src/calculation.o src/data_structure.o src/time.o src/input.o src/hashmap.o
 
 
-tests.o: tests.c  data_structure.h 
 
 profile: CFLAGS += -g
-profile: tcalc
-	valgrind --tool=callgrind ./tcalc < profile_input
+profile: all 
+	valgrind --tool=callgrind bin/tcalc < test/profile_input
 	callgrind_annotate  callgrind.out.*
 	kcachegrind
 	rm callgrind.out*
 	make clean
 
 valgrind: CFLAGS += -g
-valgrind: tcalc
-	valgrind   tcalc < profile_input
+valgrind: all 
+	valgrind   bin/tcalc < test/profile_input
 
 .PHONY : clean style test
 
@@ -84,12 +83,13 @@ style:
 
 
 clean:
-	rm -f $(OBJS) *.o
-	rm -f tests
+	rm -f $(OBJS) test/*.o
+	rm -f test/tests
 	rm -f $(TARGETS)
+	rm -f bin/* 
 	rm -f *.gcda *.gcda *.gcno *.gcov coverage.info
 	rm -rf out/
 
 bin: clean all
-	cp $(TARGETS) ~/bin/
+	cp bin/tcalc ~/bin/
 
