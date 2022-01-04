@@ -38,7 +38,7 @@ OBJS:= tcalc.o tokens.o calculation.o data_structure.o time.o input.o hashmap.o
 tcalc: $(OBJS)
 
 
-calculation.o: calculation.c calculation.h hashmap.h tokens.h tcalc.h \
+calculation.o: calculation.c calculation.h hashmap.h tokens.h  \
  data_structure.h
 data_structure.o: data_structure.c data_structure.h tokens.h hashmap.h
 hashmap.o: hashmap.c hashmap.h
@@ -63,7 +63,7 @@ test: tests tcalc
 tests: tokens.o calculation.o data_structure.o time.o input.o hashmap.o
 
 
-tests.o: tests.c tcalc.h data_structure.h 
+tests.o: tests.c  data_structure.h 
 
 profile: CFLAGS += -g
 profile: tcalc

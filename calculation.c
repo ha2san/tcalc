@@ -1,6 +1,5 @@
 #include "calculation.h"
 #include "tokens.h"
-#include "tcalc.h"
 #include "data_structure.h"
 #include <stdlib.h>
 #include <stdio.h>
