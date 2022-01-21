@@ -11,6 +11,7 @@ Stack* stack_init(size_t size)
 
 void stack_free(Stack* s)
 {
+    if(!s)return;
     if(s->tokens_list) free(s->tokens_list);
     if(s) free(s);
     s = NULL;
@@ -19,6 +20,7 @@ void stack_free(Stack* s)
 
 int push(Stack* stack, Tokens tokens)
 {
+    if(!stack) return EXIT_FAILURE;
     if(stack->size >= MAX) return -1;
     else stack->tokens_list[stack->size++] = tokens;
     return EXIT_SUCCESS;
@@ -36,6 +38,7 @@ Tokens head(Stack const* stack)
 
 int isEmpty(Stack const* stack)
 {
+    if(!stack) return -1;
     return stack->size <= 0;
 }
 

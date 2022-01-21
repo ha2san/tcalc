@@ -12,13 +12,17 @@ int is_set_variable(char* input)
 {
     if(!input) return 0;
     if(*input == '$'){
-        while(*input != '=' && *(input) != 0) input++;
+        while(*input != '=' && *(input) != 0 &&
+                *input != '+' && *input != '-' &&
+                *input != '*' && *input != '^' &&
+                *input != '%') input++;
         return *input == '=';
     }else return 0;
 }
 
 char* get_variable_name(char* input)
 {
+    if(!input) return NULL;
     char variable_name[100];
     input++;
     size_t i = 0;
@@ -37,6 +41,7 @@ char* get_variable_name(char* input)
 
 char* get_rid_variable(char* input)
 {
+    if(!input) return NULL;
     while(*input != '=') input++;
     input++;
 
@@ -45,6 +50,7 @@ char* get_rid_variable(char* input)
 
 double main_calcul(char* input,int* error_exit,struct hashmap* map)
 {
+    if(!input || !error_exit) return EXIT_FAILURE;
     char* input_clean = minus_clean(input,1);
     char* real_input = input_clean;
     char* variable_name = NULL;
@@ -87,6 +93,7 @@ double main_calcul(char* input,int* error_exit,struct hashmap* map)
 
 double do_calculation(List_tokens* list_token)
 {
+    if(!list_token) return 0; //error
     tokens_to_postfix(list_token);
     double ret = postfix_calculation(list_token);
     return ret;
@@ -114,6 +121,7 @@ int same_level(TYPE a,TYPE b)
 
 void stack_left_parenth(Stack* s1, Stack* s2)
 {
+    if(!s1 || !s2) return;
     while (!isEmpty(s2) && head(s2).type != LPARENTH) {
         push(s1,pop(s2));
     }
@@ -128,6 +136,7 @@ void stack_left_parenth(Stack* s1, Stack* s2)
 
 void operand(Stack* s1, Stack* s2, Tokens tok)
 {
+    if(!s1 || !s2) return;
     if(isEmpty(s2) || head(s2).type == LPARENTH || (tok.type > head(s2).type && !same_level(head(s2).type,tok.type) )) {
         push(s2,tok);
     } else {
@@ -138,6 +147,7 @@ void operand(Stack* s1, Stack* s2, Tokens tok)
 
 void tokens_to_postfix(List_tokens* list_token)
 {
+    if(!list_token) return;
     //Stack* output = stack_init((size_t)list_token->size);
     //Stack* memory = stack_init((size_t)list_token->size);
     Stack output;
@@ -205,6 +215,7 @@ double calcul(double x, double y, TYPE t)
 
 double postfix_calculation(List_tokens* list_token)
 {
+    if(!list_token) return 0;//error
     double s[list_token->size];
     memset( s, 0,(size_t)(list_token->size)*sizeof(double) );
     size_t index = 0;

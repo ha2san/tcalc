@@ -47,7 +47,7 @@ debug: CFLAGS += $(cflags_d)
 
 coverage: CFLAGS += -fprofile-arcs -ftest-coverage -g
 coverage: LDLIBS += -lgcov --coverage
-coverage: test
+coverage: test 
 	gcov src/*.c
 	lcov --capture --directory . --output-file coverage.info
 	genhtml coverage.info --output-directory out
@@ -71,14 +71,17 @@ style:
 	astyle -n -o -A8 -xt0 *.[ch]
 
 
+CLEAN_OBJS = $(OBJS) test/*.o test/tests $(TARGETS) $(BINARY) *.gcda *.gcno *.gcov \
+			 coverage.info src/*.gcda src/*.gcno out/
 clean:
-	rm -f $(OBJS) test/*.o
-	rm -f test/tests
-	rm -f $(TARGETS)
-	rm -f $(BINARY) 
-	rm -f src/*.gcda src/*.gcda src/*.gcno src/*.gcov coverage.info
-	rm -f test/*.gcda test/*.gcda test/*.gcno test/*.gcov coverage.info
-	rm -rf out/
+	rm -rfv $(CLEAN_OBJS)
+#	rm -f $(OBJS) test/*.o
+#	rm -f test/tests
+#	rm -f $(TARGETS)
+#	rm -f $(BINARY) 
+#	rm -f *.gcda *.gcda *.gcno *.gcov coverage.info
+#	rm -f src/*.gcda  src/*.gcno src/*.gcov src/coverage.info
+#	rm -rf out/
 
 bin: clean all
 	cp $(BINARY) ~/bin/

@@ -41,7 +41,8 @@ void help(void)
 
 double run_argument(const char* argv)
 {
-    if(!strcmp(argv,"-h") || !strcmp(argv,"--help")) {
+    if(!argv[0]) return EXIT_SUCCESS;
+    else if(!strcmp(argv,"-h") || !strcmp(argv,"--help")) {
         help();
         return EXIT_SUCCESS;
     }else if(!strcmp(argv,"time")){
@@ -75,7 +76,7 @@ bool map_free(const void *item, void *udata) {
 
 bool show_map(const void *item, void *udata) {
     const struct mapping *user = item;
-    printf("\t%s => %g\n",user->variable_name,user->value);
+    printf("\t$%s => %g\n",user->variable_name,user->value);
 
     return true;
 }
