@@ -221,7 +221,7 @@ int syntax_checker(List_tokens const* list_tokens)
     }
 
     for (int i = 1; i < list_tokens->size; ++i) {
-        TYPE before = list_tokens->elems[i-1].type;
+        token_type before = list_tokens->elems[i-1].type;
         switch(list_tokens->elems[i].type) {
             case UNKNOWN: return ERR_UNKNOWN_SYMBOL;
             case NUMBER:
@@ -246,7 +246,7 @@ int syntax_checker(List_tokens const* list_tokens)
         }
     }
 
-    TYPE tp = list_tokens->elems[list_tokens->size-1].type;
+    token_type tp = list_tokens->elems[list_tokens->size-1].type;
 
     if(tp != NUMBER && tp != RPARENTH) {
         return ERR_BAD_END;

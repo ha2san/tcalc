@@ -99,7 +99,7 @@ double do_calculation(List_tokens* list_token)
     return ret;
 }
 
-int same_level(TYPE a,TYPE b)
+int same_level(token_type a,token_type b)
 {
     int ret = 0;
     switch (a) {
@@ -200,7 +200,7 @@ double modulo_calcul(double x, double y)
         printf("(The result might not be true: The modulo operator must take INTEGER as operands)\n");
     return  xInt%yInt;
 }
-double calcul(double x, double y, TYPE t)
+double calcul(double x, double y, token_type t)
 {
     switch (t) {
     case MODULO: return modulo_calcul(x,y);

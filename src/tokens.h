@@ -10,9 +10,9 @@
 #define ERR_UNKNOWN_SYMBOL -7
 #define ERR_BAD_END -8
 
-enum TYPE {NUMBER,MODULO,PLUS,MINUS,TIME,DIVIDE,POWER,LPARENTH,RPARENTH,VARIABLE, UNKNOWN};
+enum type {NUMBER,MODULO,PLUS,MINUS,TIME,DIVIDE,POWER,LPARENTH,RPARENTH,VARIABLE, UNKNOWN};
 
-typedef enum TYPE TYPE;
+typedef enum type token_type;
 
 typedef struct tokens Tokens;
 
@@ -20,7 +20,7 @@ typedef struct list_tokens List_tokens;
 
 struct tokens {
     char* value;
-    TYPE type;
+    token_type type;
 };
 
 struct list_tokens {
