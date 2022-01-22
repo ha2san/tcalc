@@ -11,6 +11,7 @@
 
 int check_syntax(const char* string, size_t length)
 {
+    if(!string) return SYNTAX_ERROR;
     char array[] = {'d','h','m','s'};
     size_t max_length = sizeof(array)/sizeof(*array);
     size_t j = 0;
@@ -52,6 +53,7 @@ int check_syntax(const char* string, size_t length)
 
 struct time* string_to_timer(char* string, size_t length)
 {
+    if(!string) return NULL;
     int check = check_syntax(string,length);
     if(check) {
         printf("syntax error\n");

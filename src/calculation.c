@@ -129,7 +129,6 @@ void stack_left_parenth(Stack* s1, Stack* s2)
         Tokens tok = pop(s2);
         free(tok.value);
     }
-
 }
 
 

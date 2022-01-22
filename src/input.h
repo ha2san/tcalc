@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-enum INPUT {STDIN,ARGV};
+enum input {STDIN,ARGV};
 
-char* sanitize_input(char* input,size_t length,enum INPUT where);
+char* sanitize_input(char* input,size_t length,enum input where);
 
 void help(void);
 

@@ -5,8 +5,9 @@
 #include "time.h"
 
 
-char* sanitize_input(char* input,size_t length,enum INPUT where)
+char* sanitize_input(char* input,size_t length,enum input where)
 {
+    if(!input) return NULL;
     char* new_input = calloc(length+1,sizeof(char));
     size_t index = 0;
     for (size_t i = 0; i < length; ++i) {

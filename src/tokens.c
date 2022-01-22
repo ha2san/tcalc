@@ -11,6 +11,7 @@ void print_token(Tokens t)
 
 void print_list_tokens(List_tokens const* list)
 {
+    if(!list) return;
     printf("size = %d\n",list->size);
     for (int i = 0; i < list->size; ++i) {
         print_token(list->elems[i]);
@@ -19,6 +20,7 @@ void print_list_tokens(List_tokens const* list)
 
 char* minus_clean(char* input,int first_time)
 {
+    if(!input) return NULL;
     size_t length = strlen(input);
     size_t new_length = length;
     char* input_clean = calloc(length+2,sizeof(char));
@@ -49,6 +51,7 @@ char* minus_clean(char* input,int first_time)
 
 List_tokens* get_tokens(char* input,struct hashmap* map)
 {
+    if(!input) return NULL;
     size_t input_length = strlen(input);
     Tokens* tokens_array = calloc(sizeof(Tokens),input_length);
     size_t from = 0, until = 0, index = 0 ;
@@ -119,6 +122,7 @@ size_t get_variable_end(size_t from,char* input,char* v_name)
 
 size_t getUntil(size_t index, size_t* from,char* input,Tokens* t, struct hashmap* map)
 {
+    if(!from || !input || !t) return 0;
     size_t until = (*from)+1;
 
     switch (input[*from]) {
@@ -171,9 +175,11 @@ size_t getUntil(size_t index, size_t* from,char* input,Tokens* t, struct hashmap
 
 size_t whileNumber(size_t from, char* input)
 {
+    if(!input) return from;
     size_t until = from+1;
     int haveAPoint = 0;//how to handle multiple point => error ??
-    while (until <= strlen(input)) {
+    size_t length = strlen(input);
+    while (until <= length) {
         if(isNumber(input[until]) || (input[until] == '.' && haveAPoint == 0)) {
             if(input[until] == '.') haveAPoint = 1;
             until++;
@@ -191,6 +197,7 @@ int isNumber(char c)
 
 void control_parenthesis(char* input, int* error)
 {
+    if(!input || !error) return;
     int in = 0;
     for (size_t i = 0; i < strlen(input); ++i) {
         if(input[i] == '(') {
@@ -212,6 +219,7 @@ void control_parenthesis(char* input, int* error)
 
 int syntax_checker(List_tokens const* list_tokens)
 {
+    if(!list_tokens) return ERR_SYNTAX;
     switch (list_tokens->elems[0].type) {
         case LPARENTH:
         case NUMBER:
