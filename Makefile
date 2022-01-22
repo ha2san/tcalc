@@ -79,9 +79,10 @@ clean:
 #	rm -f test/tests
 #	rm -f $(TARGETS)
 #	rm -f $(BINARY) 
-#	rm -f *.gcda *.gcda *.gcno *.gcov coverage.info
-#	rm -f src/*.gcda  src/*.gcno src/*.gcov src/coverage.info
+#	rm -f *.gc*  coverage.info
+#	rm -f src/*.gc* src/coverage.info
 #	rm -rf out/
+#	rm -rf test/*.gc*
 
 bin: clean all
 	cp $(BINARY) ~/bin/
