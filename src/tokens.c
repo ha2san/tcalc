@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef DEBUG
 void print_token(Tokens t)
 {
     printf("%s -> %d\n",t.value,t.type);
@@ -17,6 +18,7 @@ void print_list_tokens(List_tokens const* list)
         print_token(list->elems[i]);
     }
 }
+#endif
 
 char* minus_clean(char* input,int first_time)
 {

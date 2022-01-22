@@ -81,6 +81,9 @@ START_TEST(error_test)
     main_calcul((char*)"()+1",&ret,map);
     ck_assert_int_eq(ret,EXIT_FAILURE);
 
+    main_calcul((char*)"$temp+1",&ret,map);
+    ck_assert_int_eq(ret,EXIT_FAILURE);
+
     hashmap_free(map);
 }
 END_TEST

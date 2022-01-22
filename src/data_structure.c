@@ -42,6 +42,7 @@ int isEmpty(Stack const* stack)
     return stack->size <= 0;
 }
 
+#ifdef DEBUG
 void print_stack(Stack const* s)
 {
     for (size_t i = 0; i < s->size; ++i) {
@@ -49,3 +50,4 @@ void print_stack(Stack const* s)
     }
     putchar('\n');
 }
+#endif

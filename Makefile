@@ -71,8 +71,8 @@ style:
 	astyle -n -o -A8 -xt0 *.[ch]
 
 
-CLEAN_OBJS = $(OBJS) test/*.o test/tests $(TARGETS) $(BINARY) *.gcda *.gcno *.gcov \
-			 coverage.info src/*.gcda src/*.gcno out/
+CLEAN_OBJS = $(OBJS) test/*.o test/tests $(TARGETS) $(BINARY) *.gc*  \
+			 coverage.info src/*.gc*  out/ test/*.gc*
 clean:
 	rm -rfv $(CLEAN_OBJS)
 #	rm -f $(OBJS) test/*.o
