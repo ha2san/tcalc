@@ -26,12 +26,12 @@ int check_syntax(const char* string, size_t length)
             space = 0;
             digit = 0;
             afterPoint = 0;
-            
-        }else if(string[i] == '.'){
+
+        } else if(string[i] == '.') {
             if(!point) return SYNTAX_ERROR;
             afterPoint = 1;
             point = 0;
-        }else if (isalpha(string[i])) {
+        } else if (isalpha(string[i])) {
             if(i==0)return SYNTAX_ERROR;
             if(afterPoint) return SYNTAX_ERROR;
             if(digit) return SYNTAX_ERROR;
@@ -72,17 +72,17 @@ struct time* string_to_timer(char* string, size_t length)
                 value += add;
                 afterPointDecimal *= 10;
             }
-        }else if (string[i] == '.'){
+        } else if (string[i] == '.') {
             afterPoint=1;
         } else if(isspace(string[i])) {
 
         } else {
             afterPoint = 0;
             switch (string[i]) {
-                case 'd': time->days = value; break;
-                case 'h': time->hours = value; break;
-                case 'm': time->minutes = value; break;
-                case 's': time->secondes = value; break;
+            case 'd': time->days = value; break;
+            case 'h': time->hours = value; break;
+            case 'm': time->minutes = value; break;
+            case 's': time->secondes = value; break;
             }
             value = 0;
         }
@@ -93,13 +93,12 @@ struct time* string_to_timer(char* string, size_t length)
 void adding(double* time, double* upper_time,double* down_time,double limit,double down_limit)
 {
     double decimal = *time - (int)*time;
-    if(down_time && decimal > 0){
+    if(down_time && decimal > 0) {
         *down_time += decimal * down_limit;
         *time -= decimal;
     }
 
-    while(upper_time && *time >= limit)
-    {
+    while(upper_time && *time >= limit) {
         *time -= limit;
         *upper_time += 1;
     }
@@ -157,7 +156,7 @@ void main_function()
 {
     char* stime = readline(">(time mode) ");
     struct time* time = string_to_timer((char*)stime,strlen(stime));
-    if(time){
+    if(time) {
         arrange(time);
         arrange(time);
         print(time);

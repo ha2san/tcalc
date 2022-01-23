@@ -13,6 +13,8 @@ typedef struct Stack Stack;
 /**
  * @brief
  *
+ * @param size_t
+ *
  * @return
  */
 Stack* stack_init(size_t);

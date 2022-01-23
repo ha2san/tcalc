@@ -68,7 +68,7 @@ valgrind: all
 .PHONY : clean style test
 
 style:
-	astyle -n -o -A8 -xt0 *.[ch]
+	astyle -n -o -A8 -xt0 src/*.[ch]
 
 
 CLEAN_OBJS = $(OBJS) test/*.o test/tests $(TARGETS) $(BINARY) *.gc*  \

@@ -28,14 +28,14 @@ char* sanitize_input(char* input,size_t length,enum input where)
 void help(void)
 {
     printf("TCALC: terminal calculator\n"
-            "usage:\n"
-            "        $ tcalc \"3*(2+1)\"\n"
-            "        9\n"
-            "        or\n"
-            "        $ tcalc\n"
-            "        > 1.5*9.8+3.2\n"
-            "        17.9\n\n"
-            "operands: + - * ^\n");
+           "usage:\n"
+           "        $ tcalc \"3*(2+1)\"\n"
+           "        9\n"
+           "        or\n"
+           "        $ tcalc\n"
+           "        > 1.5*9.8+3.2\n"
+           "        17.9\n\n"
+           "operands: + - * ^\n");
 
 }
 
@@ -46,7 +46,7 @@ double run_argument(const char* argv)
     else if(!strcmp(argv,"-h") || !strcmp(argv,"--help")) {
         help();
         return EXIT_SUCCESS;
-    }else if(!strcmp(argv,"time")){
+    } else if(!strcmp(argv,"time")) {
         main_function();
         return EXIT_SUCCESS;
     }
@@ -69,13 +69,15 @@ double run_argument(const char* argv)
 }
 
 
-bool map_free(const void *item, void *udata) {
+bool map_free(const void *item, void *udata)
+{
     const struct mapping *user = item;
     free(user->variable_name);
     return true;
 }
 
-bool show_map(const void *item, void *udata) {
+bool show_map(const void *item, void *udata)
+{
     const struct mapping *user = item;
     printf("\t$%s => %g\n",user->variable_name,user->value);
 
@@ -85,7 +87,7 @@ bool show_map(const void *item, void *udata) {
 int run_stdin(void)
 {
     printf("write \"clear\" to clear the screen\n"
-            "write \"q\" or \"exit\" to exit\n");
+           "write \"q\" or \"exit\" to exit\n");
     using_history();
     struct hashmap* map = new_map();
     while(1) {

@@ -33,13 +33,96 @@ void print_token(Tokens t);
 
 void print_list_tokens(List_tokens const* list);
 
+/**
+ * @brief
+ *
+ * @param input
+ * @param first_time
+ *
+ * @return
+ */
 char* minus_clean(char* input,int first_time);
+
+/**
+ * @brief
+ *
+ * @param input
+ * @param map
+ *
+ * @return
+ */
 List_tokens* get_tokens(char* input,struct hashmap* map);
+
+/**
+ * @brief
+ *
+ * @param list
+ */
 void free_list_tokens(List_tokens* list);
+
+/**
+ * @brief
+ *
+ * @param from
+ * @param input
+ * @param v_name
+ *
+ * @return
+ */
 size_t get_variable_end(size_t from,char* input,char* v_name);
+
+/**
+ * @brief
+ *
+ * @param index
+ * @param from
+ * @param input
+ * @param t
+ * @param map
+ *
+ * @return
+ */
 size_t getUntil(size_t index, size_t* from,char* input,Tokens* t, struct hashmap* map);
+
+/**
+ * @brief
+ *
+ * @param from
+ * @param input
+ *
+ * @return
+ */
 size_t whileNumber(size_t from, char* input);
+
+/**
+ * @brief
+ *
+ * @param c
+ *
+ * @return
+ */
 int isNumber(char c);
+
+/**
+ * @brief
+ *
+ * @param input
+ * @param error
+ */
 void control_parenthesis(char* input, int* error);
+
+/**
+ * @brief
+ *
+ * @param list_tokens
+ *
+ * @return
+ */
 int syntax_checker(List_tokens const* list_tokens);
+
+/**
+ * @brief
+ *
+ * @param error
+ */
 void print_syntax_error(int error);

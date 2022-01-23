@@ -1,5 +1,5 @@
 #define _XOPEN_SOURCE 700
-#include "input.h" 
+#include "input.h"
 
 int main(int argc, char *argv[])
 {

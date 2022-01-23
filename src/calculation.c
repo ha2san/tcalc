@@ -11,13 +11,13 @@
 int is_set_variable(char* input)
 {
     if(!input) return 0;
-    if(*input == '$'){
+    if(*input == '$') {
         while(*input != '=' && *(input) != 0 &&
-                *input != '+' && *input != '-' &&
-                *input != '*' && *input != '^' &&
-                *input != '%') input++;
+              *input != '+' && *input != '-' &&
+              *input != '*' && *input != '^' &&
+              *input != '%') input++;
         return *input == '=';
-    }else return 0;
+    } else return 0;
 }
 
 char* get_variable_name(char* input)
@@ -27,8 +27,7 @@ char* get_variable_name(char* input)
     input++;
     size_t i = 0;
 
-    while(*input != '=')
-    {
+    while(*input != '=') {
         variable_name[i] = *input;
         i++;
         input++;
@@ -54,7 +53,7 @@ double main_calcul(char* input,int* error_exit,struct hashmap* map)
     char* input_clean = minus_clean(input,1);
     char* real_input = input_clean;
     char* variable_name = NULL;
-    if(map && is_set_variable(input_clean)){
+    if(map && is_set_variable(input_clean)) {
         variable_name = get_variable_name(input_clean);
         input_clean = get_rid_variable(input_clean);
     }
@@ -74,7 +73,7 @@ double main_calcul(char* input,int* error_exit,struct hashmap* map)
     } else {
         *error_exit = EXIT_SUCCESS;
         ret = do_calculation(tok);
-        if(map && variable_name){
+        if(map && variable_name) {
             struct mapping* in_map = calloc(1,sizeof(struct mapping));
             in_map->variable_name = variable_name;
             in_map->value = ret;
