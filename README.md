@@ -34,6 +34,7 @@ $ tcalc
 
 operands: + - * ^ %
 
-tested on a arch-based linux machine
+tested on a arch-based linux machine.
+
 You must install editline but i will try to use something else in the near future...
 
