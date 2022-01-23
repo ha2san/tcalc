@@ -41,3 +41,14 @@ You must install editline but i will try to use something else in the near futur
 
 (*src/hashmap.[ch] are not written by me* but I have the intention to implement
 my own hashmap files that are shorter)
+
+
+Makefile:
+- make all: compile the program in optimized mode
+- make debug: compile the program in debug mode
+- make test: run the test
+- make coverage: give a coverage of the test
+- make profile: run the profiler on the program
+- make valgrind: run the some test with valgrind to detect errors
+- make clean: clean the project
+- make style: clean the code 
