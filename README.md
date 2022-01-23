@@ -1,4 +1,4 @@
-simple calculator that can be used in the terminal
+simple calculator that can be used in the terminal 
 
 usage example:
 ```
@@ -34,4 +34,6 @@ $ tcalc
 
 operands: + - * ^ %
 
-   
+tested on a arch-based linux machine
+You must install editline but i will try to use something else in the near future...
+
