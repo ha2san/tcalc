@@ -4,37 +4,37 @@
 
 
 /**
- * @brief
+ * @brief does the calcul and return the value
  *
- * @param input
- * @param error_exit
- * @param map
+ * @param input expression given by the user
+ * @param error_exit to know if an error occured
+ * @param map used for variables
  *
- * @return
+ * @return value of the calcul
  */
 double main_calcul(char* input,int* error_exit,struct hashmap* map);
 
 /**
- * @brief
+ * @brief does the calculation given the tokens
  *
- * @param list_token
+ * @param list_token list of tokens
  *
- * @return
+ * @return value of the calculation
  */
 double do_calculation(List_tokens* list_token);
 
 /**
- * @brief
+ * @brief rearrange the order of the tokens to match a postfix order
  *
- * @param list_token
+ * @param list_token list of tokens
  */
 void tokens_to_postfix(List_tokens* list_token);
 
 /**
- * @brief
+ * @brief given a list of tokens in postfix order, does the calculation
  *
- * @param list_token
+ * @param list_token list of tokens in postfix order
  *
- * @return
+ * @return value of the calculation
  */
 double postfix_calculation(List_tokens* list_token);

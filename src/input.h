@@ -5,36 +5,36 @@
 enum input {STDIN,ARGV};
 
 /**
- * @brief
+ * @brief get rid of space and return error if bad value in it
  *
- * @param input
- * @param length
- * @param where
+ * @param input string given by the user
+ * @param length length of the string
+ * @param where from stdin or stdout
  *
- * @return
+ * @return new sanitized input or NULL if error
  */
 char* sanitize_input(char* input,size_t length,enum input where);
 
 /**
- * @brief
+ * @brief print help
  */
 void help(void);
 
 /**
- * @brief
+ * @brief run the program if the user gave an argument
  *
- * @param argv
+ * @param argv user argument
  *
- * @return
+ * @return value of the calculation
  */
 double run_argument(const char* argv);
 
 
 /**
- * @brief
+ * @brief free the variables list
  *
- * @param item
- * @param udata
+ * @param item variable name
+ * @param udata value
  *
  * @return
  */
@@ -42,7 +42,7 @@ bool map_free(const void *item, void *udata);
 
 
 /**
- * @brief
+ * @brief print the variable list
  *
  * @param item
  * @param udata
@@ -52,7 +52,7 @@ bool map_free(const void *item, void *udata);
 bool show_map(const void *item, void *udata);
 
 /**
- * @brief
+ * @brief run the program as REPL
  *
  * @return
  */

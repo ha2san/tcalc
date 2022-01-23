@@ -34,27 +34,27 @@ void print_token(Tokens t);
 void print_list_tokens(List_tokens const* list);
 
 /**
- * @brief
+ * @brief get rid of two minus sign if they are ?collé?
  *
- * @param input
- * @param first_time
+ * @param input sanitized input
+ * @param first_time is it the first time that the function run for this value
  *
- * @return
+ * @return new string of the calculation
  */
 char* minus_clean(char* input,int first_time);
 
 /**
- * @brief
+ * @brief given the string input give the list of tokens
  *
- * @param input
- * @param map
+ * @param input string of the calculation
+ * @param map list of variables
  *
- * @return
+ * @return list of tokens
  */
 List_tokens* get_tokens(char* input,struct hashmap* map);
 
 /**
- * @brief
+ * @brief free the list of tokens
  *
  * @param list
  */
@@ -95,33 +95,33 @@ size_t getUntil(size_t index, size_t* from,char* input,Tokens* t, struct hashmap
 size_t whileNumber(size_t from, char* input);
 
 /**
- * @brief
+ * @brief return if the char c is a number
  *
  * @param c
  *
- * @return
+ * @return boolean value
  */
 int isNumber(char c);
 
 /**
- * @brief
+ * @brief control of the parenthesis are OK in the input
  *
- * @param input
- * @param error
+ * @param input string of calculation
+ * @param error return if there is an error
  */
 void control_parenthesis(char* input, int* error);
 
 /**
- * @brief
+ * @brief check the syntax of the input
  *
- * @param list_tokens
+ * @param list_tokens list of tokens
  *
- * @return
+ * @return error value
  */
 int syntax_checker(List_tokens const* list_tokens);
 
 /**
- * @brief
+ * @brief print for debug
  *
  * @param error
  */

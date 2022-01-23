@@ -11,60 +11,61 @@ struct Stack {
 typedef struct Stack Stack;
 
 /**
- * @brief
+ * @brief init the stack in the heap, if the stack is not needed after the return of the function
+ *        it's better to not used it and allocate the stack structure in the stack as it is faster
  *
- * @param size_t
+ * @param size_t size of the stack
  *
- * @return
+ * @return return the address of the new allocated stack (NULL if error)
  */
 Stack* stack_init(size_t);
 
 /**
- * @brief
+ * @brief free the stack that has been allocated in the heap
  *
- * @param s
+ * @param s stack
  */
 void stack_free(Stack* s);
 
 /**
- * @brief
+ * @brief push an element into the stack
  *
  * @param stack
  * @param tokens
  *
- * @return
+ * @return EXIT_SUCCESS or EXIT_FAILURE
  */
 int push(Stack* stack, Tokens tokens);
 
 /**
- * @brief
+ * @brief pop a value from the stack
  *
  * @param stack
  *
- * @return
+ * @return the value returned (NULL if empty)
  */
 Tokens pop(Stack* stack);
 
 /**
- * @brief
+ * @brief return the head of the stack without poping it (peek)
  *
  * @param stack
  *
- * @return
+ * @return the value at the head
  */
 Tokens head(Stack const* stack);
 
 /**
- * @brief
+ * @brief return if the stack is empty
  *
  * @param stack
  *
- * @return
+ * @return boolean value
  */
 int isEmpty(Stack const * stack);
 
 /**
- * @brief
+ * @brief debug fonction
  *
  * @param s
  */
