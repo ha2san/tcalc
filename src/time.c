@@ -160,7 +160,7 @@ void main_function()
         arrange(time);
         arrange(time);
         print(time);
-        printf("%g days %g hours %g minutes %g seconds\n",to_days(time),to_hours(time),to_minuts(time),to_seconds(time));
+        printf("%g days or %g hours or %g minutes or %g seconds\n",to_days(time),to_hours(time),to_minuts(time),to_seconds(time));
     }
     if(time) free(time);
     if(stime) free(stime);
