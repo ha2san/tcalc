@@ -15,7 +15,7 @@ $ tcalc
 > time
 >(time mode) 25h67m24s
 1 day 2 hours 7 minutes 24 seconds
-1.08847 days 26.1233 hours 1567.4 minutes 94044 seconds
+1.08847 days or 26.1233 hours or 1567.4 minutes or 94044 seconds
 >
 ```
 
