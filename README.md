@@ -39,4 +39,5 @@ tested on a arch-based linux machine.
 You must install editline but i will try to use something else in the near future...
 
 
-(*src/hashmap.[ch] are not written by me* but I have to implement my own hashmap files that are shorter)
+(*src/hashmap.[ch] are not written by me* but I have the intention to implement
+my own hashmap files that are shorter)
