@@ -4,7 +4,7 @@
 #include <regex.h>
 #include <ctype.h>
 #include <string.h>
-#include <editline/readline.h>
+#include "../libraries/linenoise/linenoise.h"
 //#include <readline/history.h>
 
 #define SYNTAX_ERROR 1
@@ -154,7 +154,7 @@ double to_days(const struct time* const timer)
 
 void main_function()
 {
-    char* stime = readline(">(time mode) ");
+    char* stime = linenoise(">(time mode) ");
     struct time* time = string_to_timer((char*)stime,strlen(stime));
     if(time) {
         arrange(time);

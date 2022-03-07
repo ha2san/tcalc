@@ -1,7 +1,7 @@
 #include "input.h"
 #include "calculation.h"
 #include <string.h>
-#include <editline/readline.h>
+#include "../libraries/linenoise/linenoise.h"
 #include "time.h"
 
 
@@ -84,24 +84,30 @@ bool show_map(const void *item, void *udata)
     return true;
 }
 
+
 int run_stdin(void)
 {
     printf("write \"clear\" to clear the screen\n"
            "write \"q\" or \"exit\" to exit\n");
-    using_history();
     struct hashmap* map = new_map();
+
+    linenoiseHistoryLoad("/tmp/history.txt"); /* Load the history at startup */
+
+
     while(1) {
-        char* input = readline("> ");
+        char* input = linenoise("> ");
         if(!input)
             continue;
         size_t length = strlen(input);
         input = sanitize_input(input,length,STDIN);
-        add_history(input);
 
 
         if (input && length > 0) {
-            if(!strcmp(input,"q") || !strcmp(input,"exit")) {
-                free(input);
+            linenoiseHistoryAdd(input); /* Add to the history. */
+            linenoiseHistorySave("/tmp/history.txt"); /* Save the history on disk. */
+            if(!strcmp(input,"q") || !strcmp(input,"exit") || !strcmp(input,"quit")) {
+                linenoiseFree(input);
+                input = NULL;
                 break;
             } else if(!strcmp(input,"clear")) system("clear");
             else if(!strcmp(input,"time")) main_function();
@@ -114,11 +120,10 @@ int run_stdin(void)
             }
         }
 
-        if(input)free(input);
+        if(input)linenoiseFree(input);
         input = NULL;
     }
 
-    clear_history ();
     hashmap_scan(map, map_free, NULL);
     hashmap_free(map);
 

@@ -17,27 +17,54 @@ bool t_map_free(const void *item, void *udata) {
     return true;
 }
 
+void pr(int* i)
+{
+    printf("%d\n",*i);
+    (*i)++;
+}
+
 START_TEST(example_test)
 {
     struct hashmap* map = new_map();
+    int i = 0;
     int ret;
+    pr(&i);
     calcul("--1",1);
+    pr(&i);
+    printf("%d\n",i);
+    pr(&i);
     calcul("-(-1)",1);
+    pr(&i);
     calcul("9",9);
+    pr(&i);
     calcul("(3+2)", 5);
+    pr(&i);
     calcul("(3+2)-1",4);
+    pr(&i);
     calcul("5--2",7);
+    pr(&i);
     calcul("0.32",0.32);
+    pr(&i);
     calcul("0.32+0.68",1);
+    pr(&i);
     calcul("((3))",3);
+    pr(&i);
     calcul("10%2",0);
+    pr(&i);
     calcul("10*2",20);
+    pr(&i);
     calcul("10/2",5);
+    pr(&i);
     calcul("2^8",256);
+    pr(&i);
     calcul("2^8*2",512);
+    pr(&i);
     calcul("1*2+3/2",3.5);
+    pr(&i);
     calcul("1*2%4/2",0);
+    pr(&i);
     calcul("3.4%6",3);
+    pr(&i);
 
     double value = run_argument("1+1");
     ck_assert_double_eq_tol((int)value,2,PREC);
