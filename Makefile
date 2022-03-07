@@ -9,13 +9,13 @@ CFLAGS = -Ofast -pie
 LDLIBS = -lm 
 
 OBJS:= src/tcalc.o src/tokens.o src/calculation.o src/data_structure.o src/time.o \
- src/input.o src/hashmap.o libraries/linenoise/linenoise.o
+ src/input.o src/hashmap.o libraries/linenoise.o
 
 cflags_d = -pedantic -Wall -Wextra -Wfloat-equal -Wshadow   \
 -Wpointer-arith -Wbad-function-cast -Wcast-align -Wwrite-strings \
 -Wconversion -Wunreachable-code -g -fno-omit-frame-pointer
 
-FILES=src/*.c libraries/linenoise/linenoise.c
+FILES=src/*.c libraries/linenoise.c
 
 
 all:: $(TARGETS)
@@ -24,17 +24,17 @@ all:: $(TARGETS)
 
 src/tcalc: $(OBJS)
 
-libraries/linenoise/linenoise.o: libraries/linenoise/linenoise.c \
- libraries/linenoise/linenoise.h
+libraries/linenoise.o: libraries/linenoise.c \
+ libraries/linenoise.h
 calculation.o: src/calculation.c src/calculation.h src/hashmap.h \
  src/tokens.h src/data_structure.h
 data_structure.o: src/data_structure.c src/data_structure.h src/tokens.h \
  src/hashmap.h
 hashmap.o: src/hashmap.c src/hashmap.h
 input.o: src/input.c src/input.h src/calculation.h src/hashmap.h \
- src/tokens.h libraries/linenoise/linenoise.h src/time.h
+ src/tokens.h libraries/linenoise.h src/time.h
 tcalc.o: src/tcalc.c src/input.h
-time.o: src/time.c src/time.h libraries/linenoise/linenoise.h
+time.o: src/time.c src/time.h libraries/linenoise.h
 tokens.o: src/tokens.c src/tokens.h src/hashmap.h src/input.h
 test/tests.o: test/tests.c src/data_structure.h src/tokens.h \
  src/hashmap.h src/calculation.h src/input.h
@@ -45,7 +45,7 @@ test: test/tests src/tcalc
 test: CFLAGS += -fsanitize=address $(cflags_d)
 test: LDLIBS += -fsanitize=address -lcheck
 test/tests: src/tokens.o src/calculation.o src/data_structure.o src/time.o src/input.o src/hashmap.o \
-	libraries/linenoise/linenoise.o
+	libraries/linenoise.o
 
 
 debug: all 
@@ -55,7 +55,7 @@ debug: CFLAGS += $(cflags_d)
 coverage: CFLAGS += -fprofile-arcs -ftest-coverage -g
 coverage: LDLIBS += -lgcov --coverage
 coverage: test 
-	gcov src/*.c libraries/linenoise/*.c
+	gcov src/*.c libraries/*.c
 	lcov --capture --directory . --output-file coverage.info
 	genhtml coverage.info --output-directory out
 	firefox out/index.html
@@ -80,7 +80,7 @@ style:
 
 CLEAN_OBJS = $(OBJS) test/*.o test/tests $(TARGETS) $(BINARY) *.gc*  \
 			 coverage.info src/*.gc*  out/ test/*.gc* \
-			 libraries/linenoise/*.gc*
+			 libraries/*.gc*
 clean:
 	rm -rfv $(CLEAN_OBJS)
 

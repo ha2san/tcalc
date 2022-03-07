@@ -1,7 +1,7 @@
 #include "input.h"
 #include "calculation.h"
 #include <string.h>
-#include "../libraries/linenoise/linenoise.h"
+#include "../libraries/linenoise.h"
 #include "time.h"
 
 

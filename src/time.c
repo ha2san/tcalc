@@ -4,7 +4,7 @@
 #include <regex.h>
 #include <ctype.h>
 #include <string.h>
-#include "../libraries/linenoise/linenoise.h"
+#include "../libraries/linenoise.h"
 //#include <readline/history.h>
 
 #define SYNTAX_ERROR 1
