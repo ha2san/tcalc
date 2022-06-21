@@ -7,3 +7,4 @@ bin/tcalc
 .ccls
 .gdb_history
 compile_commands.json
+libraries/linenoise.o
