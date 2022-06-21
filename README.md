@@ -54,3 +54,5 @@ Makefile:
 - make style: clean the code 
 
 **TODO**
+      * [ ] change the hashmap to something simpler
+      * [ ] change readline to something simpler too
