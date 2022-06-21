@@ -5,7 +5,7 @@ PWD = ${shell pwd}
 CC=gcc
 
 #CFLAGS = -std=c11 -Ofast
-CFLAGS = -Ofast -pie
+CFLAGS = -Ofast
 LDLIBS = -lm 
 
 OBJS:= src/tcalc.o src/tokens.o src/calculation.o src/data_structure.o src/time.o \
@@ -72,7 +72,7 @@ valgrind: CFLAGS += -g
 valgrind: all 
 	valgrind   $(BINARY) < test/profile_input
 
-.PHONY : clean style test
+.PHONY : clean style test help
 
 style:
 	astyle -n -o -A8 -xt0 src/*.[ch]
@@ -87,3 +87,5 @@ clean:
 bin: clean all
 	cp $(BINARY) ~/bin/
 
+help:
+	./help

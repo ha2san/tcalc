@@ -21,11 +21,11 @@ $ tcalc
 
 ```
 $ tcalc
-> $hello=23^2
+> hello=23^2
 529
-> $hi=$hello*2
+> hi=$hello*2
 1058
-> $hello=12
+> hello=12
 12
 > variables
         hello => 12
@@ -40,7 +40,7 @@ You must install editline but i will try to use something else in the near futur
 
 
 (*src/hashmap.[ch] are not written by me* but I have the intention to implement
-my own hashmap files that are shorter)
+my own hashmap files)
 
 
 Makefile:
@@ -49,6 +49,8 @@ Makefile:
 - make test: run the test
 - make coverage: give a coverage of the test
 - make profile: run the profiler on the program
-- make valgrind: run the some test with valgrind to detect errors
+- make valgrind: run some test with valgrind to detect errors
 - make clean: clean the project
 - make style: clean the code 
+
+**TODO**

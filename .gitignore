@@ -1,0 +1,9 @@
+.cache/clangd/index
+.ccls-cache
+bin/tcalc
+*.o
+*/*.o
+
+.ccls
+.gdb_history
+compile_commands.json

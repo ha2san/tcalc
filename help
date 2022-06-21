@@ -1,0 +1,8 @@
+#!/usr/bin/sh
+
+echo "bin:      copy executable to ~/bin"
+echo "clean:    clean project"
+echo "valgrind: run valgrind on some tests"
+echo "profile:"
+echo "coverage: output coverage on test value"
+echo "debug:    compile in debug mode"
