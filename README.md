@@ -53,6 +53,6 @@ Makefile:
 - make clean: clean the project
 - make style: clean the code 
 
-**TODO**
-      - [ ] change the hashmap to something simpler
-      - [ ] change readline to something simpler too
+**TODO**:
+- [ ] change the hashmap to something simpler
+- [ ] change readline to something simpler too
